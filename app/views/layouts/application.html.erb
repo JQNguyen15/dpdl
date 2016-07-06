@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>DotA League</title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+
+<nav class="navbar navbar-inverse">
+  <div class="container">
+    <div class="navbar-header">
+      <%= link_to 'DotA League', root_path, class: 'navbar-brand' %>
+    </div>
+    <div id="navbar">
+      <% if current_user %>
+        <ul class="nav navbar-nav pull-right">
+          <li><%= image_tag current_user.avatar_url, alt: current_user.nickname %></li>
+          <li><%= link_to 'Log Out', logout_path, method: :delete %></li>
+        </ul>
+      <% else %>
+        <ul class="nav navbar-nav pull-right">
+          <li><%= link_to image_tag("signin.jpeg"), '/auth/steam' %></li>
+        </ul>
+      <% end %>
+        <ul class="nav navbar-nav">
+          <li><a href="#">Leaderboard</a></li>
+          <li><a href="#">Recent Games</a></li>
+        </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- alerts for login -->
+<div class="container">
+  <% flash.each do |key, value| %>
+    <div class="alert alert-<%= key %>">
+      <%= value %>
+    </div>
+  <% end %>
+</div>
+
+<div class="well">
+  <div class="row">
+    <div class="col-md-4">
+      <h1><%= yield :page_header %></h1>
+      <% if current_user %>
+        <button type="button" class="btn btn-primary">Create Game</button>
+      <% end %> 
+    </div>
+    <div class="col-md-4"><h1>In Progess</h1></div>
+    <div class="col-md-4"><h1>Online Users</h1></div>
+  </div>
+</div>
+
+<%= yield %>
+
+
+</body>
+</html>
