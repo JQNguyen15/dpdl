@@ -49,8 +49,30 @@
         <button type="button" class="btn btn-primary">Create Game</button>
       <% end %> 
     </div>
-    <div class="col-md-4"><h1>In Progess</h1></div>
-    <div class="col-md-4"><h1>Online Users</h1></div>
+    <div class="col-md-4">
+      <h1>In Progess</h1>
+    </div>
+    <div class="col-md-4">
+      <h1>Online Users</h1>
+
+      <% if @users %>
+        <ul> 
+        <% @users.each do |user| %>
+            <li>
+              <% user.uid %> 
+              <% user.nickname %> 
+              <% user.avatar_url %> 
+              <% user.profile_url %> 
+              <% user.created_at %> 
+              <% user.updated_at %> 
+              <% user.last_active_at %> 
+            </li>
+
+        <% end %>
+        </ul>
+      <% end %>
+
+    </div>
   </div>
 </div>
 

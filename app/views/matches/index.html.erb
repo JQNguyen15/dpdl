@@ -1,1 +1,16 @@
 <% page_header 'Open Games' %>
+      <% if @allusers %>
+        <ul> 
+        <% @allusers.each do |user| %>
+            <li>
+              <% user.uid %> 
+              <% user.nickname %> 
+              <% user.avatar_url %> 
+              <% user.profile_url %> 
+              <% user.created_at %> 
+              <% user.updated_at %> 
+              <% user.last_active_at %> 
+            </li>
+        <% end %>
+        </ul>
+      <% end %>

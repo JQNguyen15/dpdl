@@ -4,7 +4,7 @@ class SessionsController < ApplicationController
 		begin
 			@user = User.from_omniauth request.env['omniauth.auth']
 		rescue
-			flash[:error] = "Can't authorize.."
+			flash[:error] = "Error authing user"
 		else
 			session[:user_id] = @user.id
 			flash[:success] = "Welcome, #{@user.nickname}!"
@@ -19,4 +19,5 @@ class SessionsController < ApplicationController
 		end
 		redirect_to root_path
 	end
+
 end
