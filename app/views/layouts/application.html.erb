@@ -45,34 +45,18 @@
 <div class="well">
   <div class="row">
     <div class="col-md-4">
-      <h1><%= yield :page_header %></h1>
-      <% if current_user && !current_user.in_game %>
-        <button type="button" class="btn btn-primary">Create Game</button>
-      <% end %> 
+      <h1>Open Games</h1>
+      <%= render "games/game" %>
     </div>
     <div class="col-md-4">
       <h1>In Progess</h1>
     </div>
     <div class="col-md-4">
       <h1>Online Users</h1>
-
-      <% if @users %>
-        <ul> 
-        <% @users.each do |user| %>
-            <li>
-              <%= user.nickname %> 
-              <%= user.mmr %>
-            </li>
-
-        <% end %>
-        </ul>
-      <% end %>
-
+        <%= render "users/index" %>
     </div>
   </div>
 </div>
-
-<%= yield %>
 
 
 </body>

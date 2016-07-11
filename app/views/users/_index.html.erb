@@ -1,0 +1,11 @@
+<% if @users %>
+        <ul> 
+        <% @users.each do |user| %>
+            <li>
+              <%= user.nickname %> 
+              <%= user.mmr %>
+            </li>
+
+        <% end %>
+        </ul>
+<% end %>

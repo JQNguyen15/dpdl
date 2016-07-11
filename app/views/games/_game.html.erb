@@ -1,0 +1,5 @@
+<% if current_user && !current_user.in_game %>
+    <!--button is not working for some reason -->
+    
+    <%= link_to 'Create Game', :controller => :games, :action => :create, :class => 'btn btn-primary' %>
+<% end %> 
