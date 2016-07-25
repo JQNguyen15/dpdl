@@ -1,0 +1,6 @@
+<div class="col-md-4">
+	<h1>Open Games</h1>
+	<% if current_user && !current_user.in_game %>
+	    <%= link_to "Create Game", new_games_path, class: "btn btn-lg btn-primary" %>
+	<% end %> 
+</div>

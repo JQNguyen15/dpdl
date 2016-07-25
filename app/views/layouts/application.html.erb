@@ -9,55 +9,17 @@
 </head>
 <body>
 
-<nav class="navbar navbar-inverse">
-  <div class="container">
-    <div class="navbar-header">
-      <%= link_to 'DotA League', root_path, class: 'navbar-brand' %>
-    </div>
-    <div id="navbar">
-      <% if current_user %>
-        <ul class="nav navbar-nav pull-right">
-          <li><%= image_tag current_user.avatar_url, alt: current_user.nickname %></li>
-          <li><%= link_to 'Log Out', logout_path, method: :delete %></li>
-        </ul>
-      <% else %>
-        <ul class="nav navbar-nav pull-right">
-          <li><%= link_to image_tag("signin.jpeg"), '/auth/steam' %></li>
-        </ul>
-      <% end %>
-        <ul class="nav navbar-nav">
-          <li><a href="#">Leaderboard</a></li>
-          <li><a href="#">Recent Games</a></li>
-        </ul>
-    </div>
-  </div>
-</nav>
+<%= render 'layouts/header' %>
 
-<!-- alerts for login -->
-<div class="container">
-  <% flash.each do |key, value| %>
-    <div class="alert alert-<%= key %>">
-      <%= value %>
-    </div>
-  <% end %>
-</div>
+<%= render 'shared/alert_msg' %>
 
 <div class="well">
   <div class="row">
-    <div class="col-md-4">
-      <h1>Open Games</h1>
-      <%= render "games/game" %>
-    </div>
-    <div class="col-md-4">
-      <h1>In Progess</h1>
-    </div>
-    <div class="col-md-4">
-      <h1>Online Users</h1>
-        <%= render "users/index" %>
-    </div>
+    <%= render 'layouts/game' %>
+    <%= render 'layouts/in_progress' %>
+    <%= render 'layouts/users' %>
   </div>
 </div>
-
 
 </body>
 </html>
