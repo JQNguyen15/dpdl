@@ -7,4 +7,11 @@ module ApplicationHelper
   def online_users
     User.where(["last_active_at > ?", 5.minutes.ago])
   end
+
+  # open games
+  def open_games
+    Game.where(["started = ? AND aborted = ?", false, false])
+  end
+
+
 end

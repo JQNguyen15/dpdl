@@ -1,6 +1,32 @@
 <div class="col-md-4">
 	<h1>Open Games</h1>
 	<% if current_user && !current_user.in_game %>
-	    <%= link_to "Create Game", new_games_path, class: "btn btn-lg btn-primary" %>
+	    <%= link_to "Create Game", create_path, class: "btn btn-primary" %>
+	<% elsif current_user && current_user.in_game %>
+		<%= link_to "Leave Game", cancel_path, class: "btn btn-danger" %>
 	<% end %> 
+
+	<% @games = open_games %>
+	<% if @games %>
+	        
+
+	        <ul>
+	        	<% @games.each do |game| %>
+	            Game ID: 
+	              <%= game.id %> Host: 
+	              <%= game.host %>  
+	              <br>Players
+	        	  <li>
+	        		
+	        	  </li>
+	       		 <% end %>
+
+	        </ul>
+	<% end %>
+
+	<!-- needs to go in a partial view as part of the layout!!
+	Host: <%#= @host.nickname %> 
+	do a loop looking for all games that have not started yet-->
+
+    <%# this should be in another if statement for games created = link_to "Join Game", new_games_path, class: "btn btn-success" %>
 </div>
