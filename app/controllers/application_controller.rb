@@ -19,4 +19,14 @@ class ApplicationController < ActionController::Base
   		end
   	end
 
+    def logged_in
+      @user = current_user
+      if @user
+        return true
+      else
+        flash[:danger] = "Please log in"
+        redirect_to root_url
+      end
+    end
+
 end

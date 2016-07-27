@@ -13,5 +13,5 @@ module ApplicationHelper
     Game.where(["started = ? AND aborted = ?", false, false])
   end
 
-
+  
 end

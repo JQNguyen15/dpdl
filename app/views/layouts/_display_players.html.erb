@@ -1,0 +1,11 @@
+<b>Game ID: </b>
+<%= game.id %> 
+<b> Host: </b><%= find_user(game.host).nickname %><br>
+<u>Players</u> <% @players = game.players.split %>
+<% @players.each do |player| %>
+	<li>
+		<% @aplayer = find_user(player) %>
+		<%= @aplayer.nickname %>
+		<%= @aplayer.mmr %>
+	</li>
+<% end %>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160726203146) do
+ActiveRecord::Schema.define(version: 20160727004026) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -38,6 +38,7 @@ ActiveRecord::Schema.define(version: 20160726203146) do
     t.integer  "mmr",            default: 1000
     t.boolean  "in_game",        default: false
     t.boolean  "has_vote",       default: false
+    t.boolean  "game_started",   default: false
     t.index ["uid"], name: "index_users_on_uid", unique: true, using: :btree
   end
 

@@ -5,4 +5,5 @@ Rails.application.routes.draw do
   delete '/logout', to: 'sessions#destroy', as: :logout
   get '/create', to: 'games#create'
   get '/cancel', to: 'games#destroy'
+  get '/join_game', to: 'games#join_game'
 end

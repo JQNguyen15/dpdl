@@ -1,0 +1,3 @@
+<% if !game.players.split.include? current_user.id.to_s %>
+	<%= link_to "Join Game", join_game_path(:gameid => game.id), class: "btn btn-success" %><br>
+<% end %>
