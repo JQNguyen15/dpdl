@@ -1,4 +1,6 @@
 module ApplicationHelper
+  # putting in methods that help display the page in here
+
   def page_header(text)
     content_for(:page_header) { text.to_s.html_safe }
   end
@@ -12,6 +14,4 @@ module ApplicationHelper
   def open_games
     Game.where(["started = ? AND aborted = ?", false, false])
   end
-
-  
 end

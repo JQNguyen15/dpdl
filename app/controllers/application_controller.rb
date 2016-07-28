@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   # this method updates the users last active moment
   before_action :record_user_activity
-
+  # general purpose stuff
   private
   	def current_user
   		return nil unless session[:user_id]

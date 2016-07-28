@@ -1,5 +1,6 @@
 class GamesController < ApplicationController
 	before_action :logged_in, only: [:create, :destroy, :join_game]
+	
 	def index
 	end
 
@@ -10,6 +11,7 @@ class GamesController < ApplicationController
 			user_join
 			@game.host = current_user.id
 			add_player_to_game(@game, current_user)
+			@game.save
 		end
 	end
 
@@ -17,19 +19,14 @@ class GamesController < ApplicationController
 	def destroy 
 		@game = Game.find_by(id: params[:gameid])
 		if @game 
-			if @game.host.eql? current_user.id.to_s
-				#first set all users in game to false
-				@players = @game.players.split
-				@players.each do |player|
+			if @game.host == current_user.id
+				@game.players.each do |player|
 					@aplayer = User.find_by(id: player)
 					user_leave(@aplayer)
 				end
 				@game.destroy
 			else
-				# convert to int array, delete the right user, then join and put it back as string
-				@players = @game.players.split.map(&:to_i)
-				@players.delete current_user.id
-				@game.players = @players.map(&:to_s).join(" ")
+				@game.players.delete current_user.id
 				@game.save
 				user_leave(current_user)
 			end
@@ -50,19 +47,21 @@ class GamesController < ApplicationController
 
 	private
 
+		# user is joining a game
 		def user_join
 			current_user.in_game = true
 			current_user.save
 		end
 
-		def user_leave(auser)
-			auser.in_game = false
-			auser.save
+		# user is leaving a game
+		def user_leave(aUser)
+			aUser.in_game = false
+			aUser.save
 		end
 
-		def add_player_to_game(agame, aplayer)
-			agame.players = "#{agame.players} #{aplayer.id}"
-			agame.save
+		def add_player_to_game(aGame, aPlayer)
+			aGame.players << aPlayer.id
+			aGame.save
 		end
 
 end

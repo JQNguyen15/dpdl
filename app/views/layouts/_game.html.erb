@@ -13,7 +13,7 @@
 		          	<% if !current_user.in_game %>
 					  		<%= render 'layouts/join_game', :game => game %>
 					  		<% elsif current_user.in_game && !current_user.game_started %>
-					  			<% if game.players.split.include? current_user.id.to_s %>
+					  			<% if game.players.include? current_user.id %>
 										<%= link_to "Leave Game", cancel_path(:gameid => game.id), class: "btn btn-danger" %><br>
 										<% end %>
 								<% end %>
