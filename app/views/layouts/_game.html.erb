@@ -6,19 +6,23 @@
 	<% end %> 
 
 	<% if @games %>
-	        <ul>
-	        	<% @games.each do |game| %>
-	          	<%= render 'layouts/display_players', :game => game %>
-		          <% if current_user %>
-		          	<% if !current_user.in_game %>
-					  		<%= render 'layouts/join_game', :game => game %>
-					  		<% elsif current_user.in_game && !current_user.game_started %>
-					  			<% if game.players.include? current_user.id %>
-										<%= link_to "Leave Game", cancel_path(:gameid => game.id), class: "btn btn-danger" %><br>
-										<% end %>
-								<% end %>
-					  	<% end %>
-	       		<% end %>
-	        </ul>
+		<ul>
+			<% @games.each do |game| %>
+				<%= render 'layouts/display_players', :game => game %>
+				<% if current_user %>
+					<% if !current_user.in_game && game.players.count < 10 %>
+						<%= render 'layouts/join_game', :game => game %>
+					<% elsif current_user.in_game %>
+						<% if game.players.include? current_user.id %>
+							<%= link_to "Leave Game", cancel_path(:gameid => game.id), class: "btn btn-danger" %>
+						<% end %>
+					<% end %>
+
+					<% if current_user.id == game.host && game.players.count == 10 %>
+						<%= link_to "Start Game", start_path(:gameid => game.id), class: "btn btn-info" %> <br>
+					<% end %>
+				<% end %>
+			<% end %>
+		</ul>
 	<% end %>
 </div>

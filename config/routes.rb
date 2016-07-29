@@ -6,4 +6,5 @@ Rails.application.routes.draw do
   get '/create', to: 'games#create'
   get '/cancel', to: 'games#destroy'
   get '/join_game', to: 'games#join_game'
+  get '/start', to: 'games#start_game'
 end

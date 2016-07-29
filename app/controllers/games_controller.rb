@@ -38,10 +38,18 @@ class GamesController < ApplicationController
 	def join_game
 		if !current_user.in_game
 			@game = Game.find_by(id: params[:gameid])
-			if @game
+			if @game && @game.players.count < 10
 				user_join
 				add_player_to_game(@game, current_user)
 			end
+		end
+	end
+
+	def start_game
+		@game = Game.find_by(id: params[:gameid])
+		if @game.players.count == 10
+			###algorithm here to create teams!
+            
 		end
 	end
 
