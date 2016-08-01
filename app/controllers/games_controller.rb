@@ -55,9 +55,11 @@ class GamesController < ApplicationController
 				@game.started = true
 				# give all players a vote
 				@game.players.each do |player|
-					player.has_vote = true
-					player.save
+					@aplayer = User.find_by(id: player)
+					@aplayer.has_vote = true
+					@aplayer.save
 				end
+
 				@game.save            
 			end
 		end
@@ -81,7 +83,12 @@ class GamesController < ApplicationController
 				@game.finished = true
 				@game.started = false
 				@game.save
-				user_leave(current_user)
+				@game.players.each do |player|
+					@aplayer = User.find_by(id: player)
+					@aplayer.has_vote = true
+					user_leave(@aplayer)
+					@aplayer.save
+				end
 			end
 		end
 	end
@@ -104,7 +111,12 @@ class GamesController < ApplicationController
 				@game.finished = true
 				@game.started = false
 				@game.save
-				user_leave(current_user)
+				@game.players.each do |player|
+					@aplayer = User.find_by(id: player)
+					@aplayer.has_vote = true
+					user_leave(@aplayer)
+					@aplayer.save
+				end
 			end
 		end
 	end
