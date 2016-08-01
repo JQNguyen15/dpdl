@@ -1,9 +1,9 @@
 class Game < ActiveRecord::Base
   validate :check_max_players
   #TODO
-  #needs major refactoring 
+  #refactor
   after_initialize :set_attr
-  # need to refactor these to just be instance variables
+ 
   def set_attr
     @defaultInitialMean = 25.0
     @beta = @defaultInitialMean / 6.0

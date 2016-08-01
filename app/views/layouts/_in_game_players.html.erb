@@ -1,0 +1,25 @@
+<b>Game ID: </b>
+<%= game.id %> Match Quality: <%= game.match_quality %><br>
+<u>Radiant</u> 
+<ul>
+	<% game.radint.each do |player| %>
+		<li>
+			<% @aplayer = find_user(player) %>
+			<% if @aplayer.avatar_url %>
+				<%= image_tag @aplayer.avatar_url %>
+			<% end %>
+			<%= @aplayer.nickname %>
+			<%= @aplayer.skill %>
+		</li>
+	<% end %>
+</ul>
+<u>Dire</u>
+<ul>
+	<% game.dire.each do |player| %>
+		<li>
+			<% @aplayer = find_user(player) %>
+			<%= @aplayer.nickname %>
+			<%= @aplayer.skill %>
+		</li>
+	<% end %>
+</ul>	

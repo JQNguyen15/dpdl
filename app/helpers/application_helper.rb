@@ -12,6 +12,15 @@ module ApplicationHelper
 
   # open games
   def open_games
-    Game.where(["started = ? AND aborted = ?", false, false])
+    Game.where(["started = ? AND finished = ?", false, false])
+  end
+
+  # in progress games
+  def in_progress_games
+    Game.where(["started = ?", true])
+  end
+
+  def finished_games
+    Game.where(["finished = ?", true])
   end
 end

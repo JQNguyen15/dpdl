@@ -1,4 +1,17 @@
 <div class="col-md-4">
 	<h1>In Progess</h1>
-	<!-- look for games that are in progress here -->
+	<% @games = in_progress_games %>
+	<% if @games %>
+		<% @games.each do |game| %>
+			<%= render 'layouts/in_game_players', :game => game %>
+
+			<% if game.players.include? current_user.id %>
+			<!-- display voting logic here !-->
+				<% if current_user.has_vote %>
+					<%= link_to "Radi", vote_radiant_path(:gameid => game.id), class: "btn btn-primary" %>
+					<%= link_to "Dire", vote_dire_path(:gameid => game.id), class: "btn btn-danger" %>
+				<% end %>
+			<% end %>
+		<% end %>
+	<% end %>
 </div>

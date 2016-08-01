@@ -48,9 +48,57 @@ class GamesController < ApplicationController
 	def start_game
 		@game = Game.find_by(id: params[:gameid])
 		if @game.players.count == 10
-			###algorithm here to create teams!
-            
+			
+			@game.make_teams
+
+			@game.started = true
+			# give all players a vote
+			@game.players.each do |player|
+				player.has_vote = true
+				player.save
+			end
+			@game.save            
 		end
+	end
+
+	def vote_radiant
+		current_user.has_vote = false
+		current_user.save
+
+		@game = Game.find_by(id: params[:gameid])
+		@game.rad_votes += 1
+		if @game.rad_votes >= 6
+			@game.winner = "radiant"
+			@game.loser = "dire"
+		end
+		@game.calc_stakes
+		@game.get_stakes_for_outcome
+		@game.calc_winner_ratings
+		@game.calc_loser_ratings
+		@game.finished = true
+		@game.started = false
+		@game.save
+		user_leave(current_user)
+	end
+
+	def vote_dire
+		current_user.has_vote = false
+		current_user.save
+
+		@game = Game.find_by(id: params[:gameid])
+		@game.dire_votes += 1
+		if @game.dire_votes >= 6
+			@game.winner = "dire"
+			@game.loser = "radiant"
+		end
+		@game.calc_stakes
+		@game.get_stakes_for_outcome
+		@game.calc_winner_ratings
+		@game.calc_loser_ratings
+		@game.finished = true
+		@game.started = false
+		@game.save
+		user_leave(current_user)
 	end
 
 	private
