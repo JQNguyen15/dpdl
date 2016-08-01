@@ -49,3 +49,4 @@ group :test do
 end
 
 gem 'sprockets', '3.6.3'
+gem 'distribution'

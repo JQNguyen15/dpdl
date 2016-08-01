@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160731205911) do
+ActiveRecord::Schema.define(version: 20160801044728) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -28,6 +28,7 @@ ActiveRecord::Schema.define(version: 20160731205911) do
     t.integer  "radint",        default: [],                 array: true
     t.integer  "dire",          default: [],                 array: true
     t.float    "match_quality", default: 0.0
+    t.string   "loser"
   end
 
   create_table "users", force: :cascade do |t|
