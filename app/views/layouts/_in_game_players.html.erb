@@ -18,6 +18,9 @@
 	<% game.dire.each do |player| %>
 		<li>
 			<% @aplayer = find_user(player) %>
+			<% if @aplayer.avatar_url %>
+				<%= image_tag @aplayer.avatar_url %>
+			<% end %>
 			<%= @aplayer.nickname %>
 			<%= @aplayer.skill %>
 		</li>

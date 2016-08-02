@@ -10,6 +10,7 @@
 				<% if current_user.has_vote %>
 					<%= link_to "Radi", vote_radiant_path(:gameid => game.id), class: "btn btn-primary" %>
 					<%= link_to "Dire", vote_dire_path(:gameid => game.id), class: "btn btn-danger" %>
+					<%= link_to "Draw", vote_draw_path(:gameid => game.id), class: "btn btn-warning" %>
 				<% end %>
 			<% end %>
 		<% end %>

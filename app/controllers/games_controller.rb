@@ -13,6 +13,7 @@ class GamesController < ApplicationController
 			add_player_to_game(@game, current_user)
 			@game.save
 		end
+		redirect_to root_url
 	end
 
 	# user cancels a game
@@ -43,6 +44,7 @@ class GamesController < ApplicationController
 				add_player_to_game(@game, current_user)
 			end
 		end
+		redirect_to root_url
 	end
 
 	def start_game
@@ -63,63 +65,108 @@ class GamesController < ApplicationController
 				@game.save            
 			end
 		end
+		redirect_to root_url
 	end
 
 	def vote_radiant
-		if logged_in
-			current_user.has_vote = false
-			current_user.save
+		if logged_in 
+			if current_user.has_vote == true
+				current_user.has_vote = false
+				current_user.save
 
-			@game = Game.find_by(id: params[:gameid])
-			@game.rad_votes += 1
-			if @game.rad_votes >= 6
-				@game.winner = "radiant"
-				@game.loser = "dire"
-			
-				@game.calc_stakes
-				@game.get_stakes_for_outcome
-				@game.calc_winner_ratings
-				@game.calc_loser_ratings
-				@game.finished = true
-				@game.started = false
-				@game.save
-				@game.players.each do |player|
-					@aplayer = User.find_by(id: player)
-					@aplayer.has_vote = true
-					user_leave(@aplayer)
-					@aplayer.save
-				end
-			end
-		end
-	end
+				@game = Game.find_by(id: params[:gameid])
+				if @game
+					@game.rad_votes += 1
+					@game.save
+		
+				if @game.rad_votes >= 6 && @game.finished == false && @game.started == true
+					@game.winner = "radiant"
+					@game.loser = "dire"
+				
+					@game.calc_stakes
+					@game.get_stakes_for_outcome
+					@game.calc_winner_ratings
+					@game.calc_loser_ratings
+					@game.finished = true
+					@game.started = false
+					@game.save
+					@game.players.each do |player|
+						@aplayer = User.find_by(id: player)
+						@aplayer.has_vote = false
+						user_leave(@aplayer)
+						@aplayer.save
+					end #end player
+				end # end check votes
+			end # end if game 
+		end # end current user has vote
+	end # end logged in
+	redirect_to root_url
+end # end def
 
 	def vote_dire
-		if logged_in
+		if logged_in 
+			if current_user.has_vote == true
+				current_user.has_vote = false
+				current_user.save
+
+				@game = Game.find_by(id: params[:gameid])
+				if @game
+					@game.dire_votes += 1
+					@game.save
+		
+					if @game.dire_votes >= 6 && @game.finished == false && @game.started == true
+						@game.winner = "dire"
+						@game.loser = "radiant"
+					
+						@game.calc_stakes
+						@game.get_stakes_for_outcome
+						@game.calc_winner_ratings
+						@game.calc_loser_ratings
+						@game.finished = true
+						@game.started = false
+						@game.save
+						@game.players.each do |player|
+							@aplayer = User.find_by(id: player)
+							@aplayer.has_vote = false
+							user_leave(@aplayer)
+							@aplayer.save
+						end #end player
+				end # end check votes
+			end # end if game 
+		end # end current user has vote
+	end # end logged in
+	redirect_to root_url
+end # end def
+
+def vote_draw
+	if logged_in
+		if current_user.has_vote == true
 			current_user.has_vote = false
 			current_user.save
 
 			@game = Game.find_by(id: params[:gameid])
-			@game.dire_votes += 1
-			if @game.dire_votes >= 6
-				@game.winner = "dire"
-				@game.loser = "radiant"
-			
-				@game.calc_stakes
-				@game.get_stakes_for_outcome
-				@game.calc_winner_ratings
-				@game.calc_loser_ratings
-				@game.finished = true
-				@game.started = false
+			if @game
+				@game.draw_votes += 1
 				@game.save
-				@game.players.each do |player|
-					@aplayer = User.find_by(id: player)
-					@aplayer.has_vote = true
-					user_leave(@aplayer)
-					@aplayer.save
+				if @game.draw_votes >= 6 && @game.finished == false && @game.started == true
+					@game.finished = true
+					@game.started = false
+					@game.save
+					
+					@game.players.each do |player|
+						@aplayer = User.find_by(id: player)
+						@aplayer.has_vote = false
+						user_leave(@aplayer)
+						@aplayer.save
+					end #end player
+
 				end
 			end
 		end
 	end
+	redirect_to root_url
+end
+
 
 	private
 
