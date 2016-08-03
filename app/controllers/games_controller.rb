@@ -12,10 +12,12 @@ class GamesController < ApplicationController
 			@game.host = current_user.id
 			add_player_to_game(@game, current_user)
 			@game.save
-			# ActionCable.server.broadcast 'newgame',
-			# 	gameid: @game.id,
-			# 	host: @game.host
-			# 	head :ok
+			@host = User.find_by(id: current_user.id)
+			ActionCable.server.broadcast 'games',
+				gameid: @game.id,
+				host: @host.nickname,
+				hostmmr: @host.skill,
+				numPlayers: @game.players.count
 		end
 		redirect_to root_url
 	end
@@ -23,7 +25,7 @@ class GamesController < ApplicationController
 	# user cancels a game
 	def destroy 
 		@game = Game.find_by(id: params[:gameid])
-		if @game 
+		if @game && logged_in
 			if @game.host == current_user.id
 				@game.players.each do |player|
 					@aplayer = User.find_by(id: player)
@@ -41,7 +43,7 @@ class GamesController < ApplicationController
 
 	# a user wants to join
 	def join_game
-		if !current_user.in_game
+		if !current_user.in_game && logged_in
 			@game = Game.find_by(id: params[:gameid])
 			if @game && @game.players.count < 10
 				user_join
