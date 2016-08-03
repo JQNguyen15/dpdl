@@ -12,6 +12,10 @@ class GamesController < ApplicationController
 			@game.host = current_user.id
 			add_player_to_game(@game, current_user)
 			@game.save
+			# ActionCable.server.broadcast 'newgame',
+			# 	gameid: @game.id,
+			# 	host: @game.host
+			# 	head :ok
 		end
 		redirect_to root_url
 	end

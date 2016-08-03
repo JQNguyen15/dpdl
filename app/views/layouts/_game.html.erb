@@ -21,6 +21,7 @@
 					<% if current_user.id == game.host && game.players.count == 10 %>
 						<%= link_to "Start Game", start_path(:gameid => game.id), class: "btn btn-info" %> <br>
 					<% end %>
+					<br>
 				<% end %>
 			<% end %>
 		</ul>

@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  # Serve websocket cable requests in-process
+  mount ActionCable.server => '/cable'
+
   root to: 'games#index'
   resource :games
   match '/auth/:provider/callback', to: 'sessions#create', via: :all
