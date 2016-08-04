@@ -17,7 +17,8 @@ class GamesController < ApplicationController
 				gameid: @game.id,
 				host: @host.nickname,
 				hostmmr: @host.skill,
-				numPlayers: @game.players.count
+				numPlayers: @game.players.count,
+				inGame: current_user.in_game
 		end
 		redirect_to root_url
 	end
@@ -48,6 +49,9 @@ class GamesController < ApplicationController
 			if @game && @game.players.count < 10
 				user_join
 				add_player_to_game(@game, current_user)
+				ActionCable.server.broadcast 'playergames',
+				playername: current_user.nickname,
+				playerskill: current_user.skill
 			end
 		end
 		redirect_to root_url

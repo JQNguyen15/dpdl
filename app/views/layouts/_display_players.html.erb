@@ -1,11 +1,13 @@
-<b>Game ID: </b>
-<%= game.id %> 
-<b> Host: </b><%= find_user(game.host).nickname %><br>
-<u>Players</u> <%= game.players.count %>
-<% game.players.each do |player| %>
-	<li>
-		<% @aplayer = find_user(player) %>
-		<%= @aplayer.nickname %>
-		<%= @aplayer.skill %>
-	</li>
-<% end %>
+<div id='display-players'>
+	<b>Game ID: </b>
+	<%= game.id %> 
+	<b> Host: </b><%= find_user(game.host).nickname %><br>
+	<u>Players</u> <%= game.players.count %>
+	<% game.players.each do |player| %>
+		<li>
+			<% @aplayer = find_user(player) %>
+			<%= @aplayer.nickname %>
+			<%= @aplayer.skill %>
+		</li>
+	<% end %>
+</div>
