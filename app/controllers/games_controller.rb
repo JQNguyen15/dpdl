@@ -96,7 +96,9 @@ class GamesController < ApplicationController
 					@aplayer.save
 				end
 
-				@game.save            
+				@game.save
+				ActionCable.server.broadcast 'destroygame',
+				gameid: @game.id           
 			end
 		end
 		redirect_to root_url
@@ -130,6 +132,8 @@ class GamesController < ApplicationController
 						user_leave(@aplayer)
 						@aplayer.save
 					end #end player
+					ActionCable.server.broadcast 'destroygame',
+					gameid: @game.id
 				end # end check votes
 			end # end if game 
 		end # end current user has vote
@@ -165,6 +169,8 @@ end # end def
 							user_leave(@aplayer)
 							@aplayer.save
 						end #end player
+						ActionCable.server.broadcast 'destroygame',
+						gameid: @game.id
 				end # end check votes
 			end # end if game 
 		end # end current user has vote
@@ -193,7 +199,8 @@ def vote_draw
 						user_leave(@aplayer)
 						@aplayer.save
 					end #end player
-
+					ActionCable.server.broadcast 'destroygame',
+					gameid: @game.id
 				end
 			end
 		end
