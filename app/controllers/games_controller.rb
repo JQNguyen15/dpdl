@@ -44,10 +44,12 @@ class GamesController < ApplicationController
 					@playersmmrs << @aplayer.skill
 					@playersnicks << @aplayer.nickname
 				end
+				down = false
 				ActionCable.server.broadcast 'playerleavegames',
 				gameid: @game.id,
 				gameplayers: @playersnicks,
 				gameskill: @playersmmrs
+				update_num_players(@game.players.count, @game.id, down)
 
 			end
 			redirect_to root_url
@@ -69,7 +71,8 @@ class GamesController < ApplicationController
 				playerskill: current_user.skill,
 				gameid: @game.id
 				#numPlayers: @game.players.count
-				update_num_players(@game.players.count,@game.id)
+				up = true
+				update_num_players(@game.players.count,@game.id,up)
 			end
 		end
 
@@ -216,10 +219,11 @@ end
 			aGame.save
 		end
 
-		def update_num_players(numPlayers,gameID)
+		def update_num_players(numPlayers,gameID,upOrDown)
 			ActionCable.server.broadcast 'numplayergames',
 				numPlayers: numPlayers,
-				gameid: gameID
+				gameid: gameID,
+				upOrDown: upOrDown
 		end
 
 end

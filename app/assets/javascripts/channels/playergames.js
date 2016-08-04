@@ -1,6 +1,6 @@
 App.messages = App.cable.subscriptions.create('PlayerGamesChannel', {  
   received: function(data) {
-  	var location = "#" + data.gameid;
+  	var location = "#players-" + data.gameid;
     return $(location).append(this.renderMessage(data));
   },
 

@@ -3,13 +3,13 @@
 	<%= game.id %> 
 	<b> Host: </b><%= find_user(game.host).nickname %><br>
 	<u>Players</u> <div id='gameid-<%= game.id %>-<%= game.players.count %>'><b><%= game.players.count %></b></div>
-	<% game.players.each do |player| %>
-		<div id="players-<%= game.id %>">
-			<li>
-				<% @aplayer = find_user(player) %>
-				<%= @aplayer.nickname %>
-				<%= @aplayer.skill %>
-			</li>
-		</div>
-	<% end %>
+	<div id="players-<%= game.id %>">
+		<% game.players.each do |player| %>
+				<li>
+					<% @aplayer = find_user(player) %>
+					<%= @aplayer.nickname %>
+					<%= @aplayer.skill %>
+				</li>
+		<% end %>
+	</div>
 </div>
