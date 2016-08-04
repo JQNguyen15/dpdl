@@ -1,5 +1,7 @@
 source 'https://rubygems.org'
 
+ruby '2.3.1'
+
 gem 'rails',        '5.0.0'
 gem 'pg',           '0.18.4'
 
@@ -29,7 +31,7 @@ end
 
 gem 'omniauth-steam'
 gem 'autoprefixer-rails'
-gem 'puma',         '3.4.0'
+gem 'puma'
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
@@ -51,4 +53,4 @@ end
 gem 'sprockets', '3.6.3'
 gem 'distribution'
 gem 'rails_12factor'
-gem 'redis'
+gem 'redis', '~> 3.0'

@@ -362,11 +362,11 @@ DEPENDENCIES
   minitest-reporters (= 1.1.9)
   omniauth-steam
   pg (= 0.18.4)
-  puma (= 3.4.0)
+  puma
   rails (= 5.0.0)
   rails-controller-testing (= 0.1.1)
   rails_12factor
-  redis
+  redis (~> 3.0)
   sass-rails (= 5.0.6)
   sdoc (~> 0.4.0)
   spring (= 1.7.2)
@@ -377,6 +377,9 @@ DEPENDENCIES
   uglifier (= 3.0.0)
   web-console (= 3.1.1)
   will_paginate (= 3.1.0)
+
+RUBY VERSION
+   ruby 2.3.1p112
 
 BUNDLED WITH
    1.12.5
