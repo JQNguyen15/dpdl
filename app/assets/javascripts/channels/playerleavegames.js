@@ -1,5 +1,3 @@
-//TODO 
-//debug - if a player creates a game, player b joins game, player a refreshes the page and player b leaves will not update player a
 
 App.messages = App.cable.subscriptions.create('PlayerLeaveGamesChannel', {  
   received: function(data) {

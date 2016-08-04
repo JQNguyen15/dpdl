@@ -32,6 +32,8 @@ class GamesController < ApplicationController
 					user_leave(@aplayer)
 				end
 				@game.destroy
+				ActionCable.server.broadcast 'destroygame',
+				gameid: @game.id
 			else
 				@game.players.delete current_user.id
 				@game.save

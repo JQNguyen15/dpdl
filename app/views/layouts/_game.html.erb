@@ -8,6 +8,7 @@
 	<% if @games %>
 		<ul>
 			<% @games.each do |game| %>
+				<div id='<%= game.id %>'>
 				<%= render 'layouts/display_players', :game => game %>
 				<% if current_user %>
 					<% if !current_user.in_game && game.players.count < 10 %>
@@ -23,6 +24,7 @@
 					<% end %>
 					<br>
 				<% end %>
+				</div>
 			<% end %>
 		</ul>
 	<% end %>
