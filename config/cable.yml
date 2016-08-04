@@ -1,6 +1,6 @@
-production:
+production: 
   adapter: redis
-  url: redis://redistogo:8eb048ae361832bf237cf2ba032861d4@catfish.redistogo.com:10121/
+  url: redis://redistogo:cd95d1e6dcc702264a5165e735e0b162@viperfish.redistogo.com:11909/
 
 development:
   adapter: async

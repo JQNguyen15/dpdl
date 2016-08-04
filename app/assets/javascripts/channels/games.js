@@ -1,3 +1,5 @@
+
+
 App.messages = App.cable.subscriptions.create('GamesChannel', {  
   received: function(data) {
     $("#open-games").removeClass('hidden')

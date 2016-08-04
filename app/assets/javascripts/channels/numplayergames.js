@@ -1,3 +1,5 @@
+
+
 App.messages = App.cable.subscriptions.create('NumPlayerGamesChannel', {  
   received: function(data) {
   	var temp = data.numPlayers;

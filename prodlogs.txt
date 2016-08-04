@@ -1,0 +1,101 @@
+2016-08-14T16:22:37.622734+00:00 app[web.1]: Started GET "/" for 23.91.229.162 at 2016-08-14 16:22:37 +0000
+2016-08-14T16:22:37.623965+00:00 app[web.1]: Processing by GamesController#index as HTML
+2016-08-14T16:22:37.626256+00:00 app[web.1]:   [1m[36mUser Load (1.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 4], ["LIMIT", 1]]
+2016-08-14T16:22:37.627837+00:00 app[web.1]:   [1m[35m (1.0ms)[0m  [1m[35mBEGIN[0m
+2016-08-14T16:22:37.630197+00:00 app[web.1]:   [1m[35mSQL (1.2ms)[0m  [1m[33mUPDATE "users" SET "updated_at" = '2016-08-14 16:22:37.627928', "last_active_at" = '2016-08-14 16:22:37.627928' WHERE "users"."id" = $1[0m  [["id", 4]]
+2016-08-14T16:22:37.632175+00:00 app[web.1]:   [1m[35m (1.8ms)[0m  [1m[35mCOMMIT[0m
+2016-08-14T16:22:37.632972+00:00 app[web.1]:   Rendering games/index.html.erb within layouts/application
+2016-08-14T16:22:37.633123+00:00 app[web.1]:   Rendered games/index.html.erb within layouts/application (0.1ms)
+2016-08-14T16:22:37.634504+00:00 app[web.1]:   Rendered layouts/_header.html.erb (0.4ms)
+2016-08-14T16:22:37.634821+00:00 app[web.1]:   Rendered shared/_alert_msg.html.erb (0.1ms)
+2016-08-14T16:22:37.636712+00:00 app[web.1]:   [1m[36mGame Load (1.2ms)[0m  [1m[34mSELECT "games".* FROM "games" WHERE (started = 'f' AND finished = 'f')[0m
+2016-08-14T16:22:37.638781+00:00 app[web.1]:   [1m[36mUser Load (1.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+2016-08-14T16:22:37.639475+00:00 app[web.1]:   [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+2016-08-14T16:22:37.641133+00:00 app[web.1]:   [1m[36mUser Load (1.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 4], ["LIMIT", 1]]
+2016-08-14T16:22:37.641557+00:00 app[web.1]:   Rendered layouts/_display_players.html.erb (4.2ms)
+2016-08-14T16:22:37.641880+00:00 app[web.1]:   Rendered layouts/_game.html.erb (6.9ms)
+2016-08-14T16:22:37.643504+00:00 app[web.1]:   [1m[36mGame Load (1.1ms)[0m  [1m[34mSELECT "games".* FROM "games" WHERE (started = 't')[0m
+2016-08-14T16:22:37.643803+00:00 app[web.1]:   Rendered layouts/_in_progress.html.erb (1.8ms)
+2016-08-14T16:22:37.645712+00:00 app[web.1]:   [1m[36mUser Load (1.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE (last_active_at > '2016-08-14 16:17:37.643934')[0m
+2016-08-14T16:22:37.646255+00:00 app[web.1]:   Rendered layouts/_users.html.erb (2.3ms)
+2016-08-14T16:22:37.646520+00:00 app[web.1]: Completed 200 OK in 22ms (Views: 8.0ms | ActiveRecord: 11.3ms)
+2016-08-14T16:22:37.687218+00:00 heroku[router]: at=info method=GET path="/" host=dpdl.herokuapp.com request_id=aacba646-9cac-4a73-bf1f-3a50189bd1de fwd="23.91.229.162" dyno=web.1 connect=1ms service=28ms status=200 bytes=3763
+2016-08-14T16:22:40.698444+00:00 heroku[router]: at=info method=GET path="/cancel?gameid=33" host=dpdl.herokuapp.com request_id=acab7a0b-a2d4-42e0-9d3c-4b203256b8d1 fwd="23.91.229.162" dyno=web.1 connect=0ms service=40ms status=302 bytes=942
+2016-08-14T16:22:40.654725+00:00 app[web.1]: Started GET "/cancel?gameid=33" for 23.91.229.162 at 2016-08-14 16:22:40 +0000
+2016-08-14T16:22:40.656318+00:00 app[web.1]: Processing by GamesController#destroy as HTML
+2016-08-14T16:22:40.656367+00:00 app[web.1]:   Parameters: {"gameid"=>"33"}
+2016-08-14T16:22:40.658838+00:00 app[web.1]:   [1m[36mUser Load (1.5ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 4], ["LIMIT", 1]]
+2016-08-14T16:22:40.660395+00:00 app[web.1]:   [1m[35m (1.0ms)[0m  [1m[35mBEGIN[0m
+2016-08-14T16:22:40.662810+00:00 app[web.1]:   [1m[35mSQL (1.2ms)[0m  [1m[33mUPDATE "users" SET "updated_at" = '2016-08-14 16:22:40.660487', "last_active_at" = '2016-08-14 16:22:40.660487' WHERE "users"."id" = $1[0m  [["id", 4]]
+2016-08-14T16:22:40.664886+00:00 app[web.1]:   [1m[35m (1.9ms)[0m  [1m[35mCOMMIT[0m
+2016-08-14T16:22:40.668061+00:00 app[web.1]:   [1m[36mGame Load (1.1ms)[0m  [1m[34mSELECT  "games".* FROM "games" WHERE "games"."id" = $1 LIMIT $2[0m  [["id", 33], ["LIMIT", 1]]
+2016-08-14T16:22:40.669592+00:00 app[web.1]:   [1m[35m (1.0ms)[0m  [1m[35mBEGIN[0m
+2016-08-14T16:22:40.672769+00:00 app[web.1]:   [1m[35mSQL (1.2ms)[0m  [1m[33mUPDATE "games" SET "players" = $1, "updated_at" = $2 WHERE "games"."id" = $3[0m  [["players", "{3}"], ["updated_at", 2016-08-14 16:22:40 UTC], ["id", 33]]
+2016-08-14T16:22:40.677147+00:00 app[web.1]:   [1m[35m (1.0ms)[0m  [1m[35mBEGIN[0m
+2016-08-14T16:22:40.675970+00:00 app[web.1]:   [1m[35m (2.9ms)[0m  [1m[35mCOMMIT[0m
+2016-08-14T16:22:40.679265+00:00 app[web.1]:   [1m[35mSQL (1.2ms)[0m  [1m[33mUPDATE "users" SET "updated_at" = $1, "in_game" = $2 WHERE "users"."id" = $3[0m  [["updated_at", 2016-08-14 16:22:40 UTC], ["in_game", false], ["id", 4]]
+2016-08-14T16:22:40.681227+00:00 app[web.1]:   [1m[35m (1.7ms)[0m  [1m[35mCOMMIT[0m
+2016-08-14T16:22:40.682582+00:00 app[web.1]:   [1m[36mUser Load (1.1ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+2016-08-14T16:22:40.682866+00:00 app[web.1]: [ActionCable] Broadcasting to playerleavegames: {:gameid=>33, :gameplayers=>["deadprez"], :gameskill=>[25.0]}
+2016-08-14T16:22:40.690700+00:00 app[web.1]: [ActionCable] Broadcasting to numplayergames: {:numPlayers=>1, :gameid=>33, :upOrDown=>false}
+2016-08-14T16:22:40.691680+00:00 app[web.1]: Redirected to https://dpdl.herokuapp.com/
+2016-08-14T16:22:40.691839+00:00 app[web.1]: Completed 302 Found in 35ms (ActiveRecord: 16.9ms)
+2016-08-14T16:22:41.021472+00:00 heroku[router]: at=info method=GET path="/" host=dpdl.herokuapp.com request_id=349582a3-1955-4445-94c1-9097857243f2 fwd="23.91.229.162" dyno=web.1 connect=0ms service=24ms status=200 bytes=3837
+2016-08-14T16:22:41.000363+00:00 app[web.1]:   [1m[35m (1.0ms)[0m  [1m[35mBEGIN[0m
+2016-08-14T16:22:40.999046+00:00 app[web.1]:   [1m[36mUser Load (1.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 4], ["LIMIT", 1]]
+2016-08-14T16:22:40.997086+00:00 app[web.1]: Processing by GamesController#index as HTML
+2016-08-14T16:22:40.996281+00:00 app[web.1]: Started GET "/" for 23.91.229.162 at 2016-08-14 16:22:40 +0000
+2016-08-14T16:22:41.002380+00:00 app[web.1]:   [1m[35mSQL (1.2ms)[0m  [1m[33mUPDATE "users" SET "updated_at" = '2016-08-14 16:22:41.000436', "last_active_at" = '2016-08-14 16:22:41.000436' WHERE "users"."id" = $1[0m  [["id", 4]]
+2016-08-14T16:22:41.004370+00:00 app[web.1]:   [1m[35m (1.8ms)[0m  [1m[35mCOMMIT[0m
+2016-08-14T16:22:41.005053+00:00 app[web.1]:   Rendering games/index.html.erb within layouts/application
+2016-08-14T16:22:41.005194+00:00 app[web.1]:   Rendered games/index.html.erb within layouts/application (0.0ms)
+2016-08-14T16:22:41.006256+00:00 app[web.1]:   Rendered layouts/_header.html.erb (0.3ms)
+2016-08-14T16:22:41.006473+00:00 app[web.1]:   Rendered shared/_alert_msg.html.erb (0.1ms)
+2016-08-14T16:22:41.008368+00:00 app[web.1]:   [1m[36mGame Load (1.2ms)[0m  [1m[34mSELECT "games".* FROM "games" WHERE (started = 'f' AND finished = 'f')[0m
+2016-08-14T16:22:41.011984+00:00 app[web.1]:   Rendered layouts/_join_game.html.erb (0.6ms)
+2016-08-14T16:22:41.010576+00:00 app[web.1]:   [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+2016-08-14T16:22:41.012066+00:00 app[web.1]:   Rendered layouts/_game.html.erb (5.5ms)
+2016-08-14T16:22:41.013592+00:00 app[web.1]:   [1m[36mGame Load (1.1ms)[0m  [1m[34mSELECT "games".* FROM "games" WHERE (started = 't')[0m
+2016-08-14T16:22:41.010143+00:00 app[web.1]:   [1m[36mUser Load (1.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+2016-08-14T16:22:41.010810+00:00 app[web.1]:   Rendered layouts/_display_players.html.erb (2.0ms)
+2016-08-14T16:22:41.013838+00:00 app[web.1]:   Rendered layouts/_in_progress.html.erb (1.6ms)
+2016-08-14T16:22:41.015728+00:00 app[web.1]:   [1m[36mUser Load (1.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE (last_active_at > '2016-08-14 16:17:41.013960')[0m
+2016-08-14T16:22:41.016466+00:00 app[web.1]: Completed 200 OK in 19ms (Views: 6.8ms | ActiveRecord: 10.0ms)
+2016-08-14T16:22:41.016214+00:00 app[web.1]:   Rendered layouts/_users.html.erb (2.2ms)
+2016-08-14T16:22:45.514878+00:00 app[web.1]:   [1m[36mUser Load (1.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+2016-08-14T16:22:45.512438+00:00 app[web.1]:   Parameters: {"gameid"=>"33"}
+2016-08-14T16:22:45.512386+00:00 app[web.1]: Processing by GamesController#destroy as HTML
+2016-08-14T16:22:45.511057+00:00 app[web.1]: Started GET "/cancel?gameid=33" for 23.91.229.162 at 2016-08-14 16:22:45 +0000
+2016-08-14T16:22:45.516684+00:00 app[web.1]:   [1m[35m (1.1ms)[0m  [1m[35mBEGIN[0m
+2016-08-14T16:22:45.531069+00:00 app[web.1]:   [1m[35m (1.8ms)[0m  [1m[35mCOMMIT[0m
+2016-08-14T16:22:45.532187+00:00 app[web.1]:   [1m[35m (1.0ms)[0m  [1m[35mBEGIN[0m
+2016-08-14T16:22:45.521128+00:00 app[web.1]:   [1m[35m (1.8ms)[0m  [1m[35mCOMMIT[0m
+2016-08-14T16:22:45.528966+00:00 app[web.1]:   [1m[35mSQL (1.2ms)[0m  [1m[33mUPDATE "users" SET "in_game" = $1, "updated_at" = $2 WHERE "users"."id" = $3[0m  [["in_game", false], ["updated_at", 2016-08-14 16:22:45 UTC], ["id", 3]]
+2016-08-14T16:22:45.526863+00:00 app[web.1]:   [1m[35m (1.8ms)[0m  [1m[35mBEGIN[0m
+2016-08-14T16:22:45.523180+00:00 app[web.1]:   [1m[36mGame Load (1.7ms)[0m  [1m[34mSELECT  "games".* FROM "games" WHERE "games"."id" = $1 LIMIT $2[0m  [["id", 33], ["LIMIT", 1]]
+2016-08-14T16:22:45.537049+00:00 app[web.1]: Completed 302 Found in 25ms (ActiveRecord: 17.3ms)
+2016-08-14T16:22:45.536030+00:00 app[web.1]:   [1m[35m (1.7ms)[0m  [1m[35mCOMMIT[0m
+2016-08-14T16:22:45.524810+00:00 app[web.1]:   [1m[36mUser Load (1.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+2016-08-14T16:22:45.536911+00:00 app[web.1]: Redirected to https://dpdl.herokuapp.com/
+2016-08-14T16:22:45.662076+00:00 app[web.1]: Processing by GamesController#index as HTML
+2016-08-14T16:22:45.536111+00:00 app[web.1]: [ActionCable] Broadcasting to destroygame: {:gameid=>33}
+2016-08-14T16:22:45.519158+00:00 app[web.1]:   [1m[35mSQL (1.2ms)[0m  [1m[33mUPDATE "users" SET "updated_at" = '2016-08-14 16:22:45.516789', "last_active_at" = '2016-08-14 16:22:45.516789' WHERE "users"."id" = $1[0m  [["id", 3]]
+2016-08-14T16:22:45.660978+00:00 app[web.1]: Started GET "/" for 23.91.229.162 at 2016-08-14 16:22:45 +0000
+2016-08-14T16:22:45.666140+00:00 app[web.1]:   [1m[36mUser Load (1.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+2016-08-14T16:22:45.534163+00:00 app[web.1]:   [1m[35mSQL (1.5ms)[0m  [1m[31mDELETE FROM "games" WHERE "games"."id" = $1[0m  [["id", 33]]
+2016-08-14T16:22:45.670252+00:00 app[web.1]:   [1m[35mSQL (1.2ms)[0m  [1m[33mUPDATE "users" SET "updated_at" = '2016-08-14 16:22:45.667858', "last_active_at" = '2016-08-14 16:22:45.667858' WHERE "users"."id" = $1[0m  [["id", 3]]
+2016-08-14T16:22:45.673026+00:00 app[web.1]:   Rendering games/index.html.erb within layouts/application
+2016-08-14T16:22:45.677082+00:00 app[web.1]:   [1m[36mGame Load (1.2ms)[0m  [1m[34mSELECT "games".* FROM "games" WHERE (started = 'f' AND finished = 'f')[0m
+2016-08-14T16:22:45.673199+00:00 app[web.1]:   Rendered games/index.html.erb within layouts/application (0.1ms)
+2016-08-14T16:22:45.674678+00:00 app[web.1]:   Rendered layouts/_header.html.erb (0.4ms)
+2016-08-14T16:22:45.672237+00:00 app[web.1]:   [1m[35m (1.8ms)[0m  [1m[35mCOMMIT[0m
+2016-08-14T16:22:45.677451+00:00 app[web.1]:   Rendered layouts/_game.html.erb (2.3ms)
+2016-08-14T16:22:45.667736+00:00 app[web.1]:   [1m[35m (1.0ms)[0m  [1m[35mBEGIN[0m
+2016-08-14T16:22:45.679547+00:00 app[web.1]:   Rendered layouts/_in_progress.html.erb (1.9ms)
+2016-08-14T16:22:45.681610+00:00 app[web.1]:   [1m[36mUser Load (1.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE (last_active_at > '2016-08-14 16:17:45.679684')[0m
+2016-08-14T16:22:45.682341+00:00 app[web.1]:   Rendered layouts/_users.html.erb (2.6ms)
+2016-08-14T16:22:45.682641+00:00 app[web.1]: Completed 200 OK in 20ms (Views: 6.3ms | ActiveRecord: 8.9ms)
+2016-08-14T16:22:45.679209+00:00 app[web.1]:   [1m[36mGame Load (1.2ms)[0m  [1m[34mSELECT "games".* FROM "games" WHERE (started = 't')[0m
+2016-08-14T16:22:45.674969+00:00 app[web.1]:   Rendered shared/_alert_msg.html.erb (0.1ms)
+2016-08-14T16:22:45.541666+00:00 heroku[router]: at=info method=GET path="/cancel?gameid=33" host=dpdl.herokuapp.com request_id=11ae3a3e-739e-4ce4-9761-1d2a7852652d fwd="23.91.229.162" dyno=web.1 connect=0ms service=30ms status=302 bytes=942
+2016-08-14T16:22:45.687814+00:00 heroku[router]: at=info method=GET path="/" host=dpdl.herokuapp.com request_id=f084ffff-bf5b-401b-a959-af314fecdf84 fwd="23.91.229.162" dyno=web.1 connect=0ms service=25ms status=200 bytes=3528
