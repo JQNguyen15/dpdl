@@ -114,26 +114,26 @@ class GamesController < ApplicationController
 				if @game
 					@game.rad_votes += 1
 					@game.save
-		
-				if @game.rad_votes >= 6 && @game.finished == false && @game.started == true
-					@game.winner = "radiant"
-					@game.loser = "dire"
-				
-					@game.calc_stakes
-					@game.get_stakes_for_outcome
-					@game.calc_winner_ratings
-					@game.calc_loser_ratings
-					@game.finished = true
-					@game.started = false
-					@game.save
-					@game.players.each do |player|
-						@aplayer = User.find_by(id: player)
-						@aplayer.has_vote = false
-						user_leave(@aplayer)
-						@aplayer.save
-					end #end player
-					ActionCable.server.broadcast 'destroygame',
-					gameid: @game.id
+			
+					if @game.rad_votes >= 6 && @game.finished == false && @game.started == true
+						@game.winner = "radiant"
+						@game.loser = "dire"
+					
+						@game.calc_stakes
+						@game.get_stakes_for_outcome
+						@game.calc_winner_ratings
+						@game.calc_loser_ratings
+						@game.finished = true
+						@game.started = false
+						@game.save
+						@game.players.each do |player|
+							@aplayer = User.find_by(id: player)
+							@aplayer.has_vote = false
+							user_leave(@aplayer)
+							@aplayer.save
+						end #end player
+						ActionCable.server.broadcast 'destroygame',
+						gameid: @game.id
 				end # end check votes
 			end # end if game 
 		end # end current user has vote
