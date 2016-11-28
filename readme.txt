@@ -1,2 +1,0 @@
-Monday July 11 2016 
-- need to finish the games controller. Allow signed in users to create a game and the game will show all current players. Players signed in not in a game will be able to join and only the host can start or abort a game
