@@ -5,7 +5,7 @@ module ApplicationHelper
     content_for(:page_header) { text.to_s.html_safe }
   end
 
-  # gets list of online users 
+  # gets list of online users
   def online_users
     User.where(["last_active_at > ?", 5.minutes.ago])
   end
