@@ -11,8 +11,8 @@ class Game < ActiveRecord::Base
     @dynamicsFactor = @defaultInitialMean / 300.00
     @initialStandardDeviation = @defaultInitialMean / 3.0
     @betaSquared = @beta * @beta
-    @drawMargin = 0
-    @c = 0
+    @drawMargin = 0.0
+    @c = 0.0
     @epsilon = 1e-20
     @tuaSquared = @dynamicsFactor * @dynamicsFactor
     @w = 0.0
