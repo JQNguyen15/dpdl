@@ -11,3 +11,7 @@
 /log/*
 !/log/.keep
 /tmp
+.vscode/
+.DS_STORE
+*.rdb
+*.txt
