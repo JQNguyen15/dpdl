@@ -1,19 +1,19 @@
 <div class="col-md-4">
-	<h1>In Progress</h1>
-	<% @games = in_progress_games %>
-	<% if @games %>
-		<% @games.each do |game| %>
-			<%= render 'layouts/in_game_players', :game => game %>
-			<% if current_user %>
-				<% if game.players.include? current_user.id %>
-				<!-- display voting logic here !-->
-					<% if current_user.has_vote %>
-						<%= link_to "Radi", vote_radiant_path(:gameid => game.id), class: "btn btn-primary" %>
-						<%= link_to "Dire", vote_dire_path(:gameid => game.id), class: "btn btn-danger" %>
-						<%= link_to "Draw", vote_draw_path(:gameid => game.id), class: "btn btn-warning" %>
-					<% end %>
-				<% end %>
-			<% end %>
-		<% end %>
-	<% end %>
+    <h1>In Progress</h1>
+    <% @games = in_progress_games %>
+    <% if @games %>
+        <% @games.each do |game| %>
+            <%= render 'layouts/in_game_players', :game => game %>
+            <% if current_user %>
+                <% if game.players.include? current_user.id %>
+                <!-- display voting logic here !-->
+                    <% if current_user.has_vote %>
+                        <%= link_to "Radi", vote_radiant_path(:gameid => game.id), class: "btn btn-primary" %>
+                        <%= link_to "Dire", vote_dire_path(:gameid => game.id), class: "btn btn-danger" %>
+                        <%= link_to "Draw", vote_draw_path(:gameid => game.id), class: "btn btn-warning" %>
+                    <% end %>
+                <% end %>
+            <% end %>
+        <% end %>
+    <% end %>
 </div>

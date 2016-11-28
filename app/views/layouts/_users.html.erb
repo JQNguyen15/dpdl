@@ -1,15 +1,15 @@
 <div class="col-md-4">
-	<% @users = online_users %>
-	<h1>Online Users</h1>
-	<% if @users %>
-	        <ul> 
-	        <% @users.each do |user| %>
-	            <li>
-	              <%= image_tag user.avatar_url %>
-	              <%= user.nickname %> 
-	              <%= user.skill %>
-	            </li>
-	        <% end %>
-	        </ul>
-	<% end %>
+  <% @users = online_users %>
+  <h1>Online Users</h1>
+  <% if @users %>
+          <ul>
+          <% @users.each do |user| %>
+              <li>
+                <%= image_tag user.avatar_url %>
+                <%= user.nickname %>
+                <%= user.skill %>
+              </li>
+          <% end %>
+          </ul>
+  <% end %>
 </div>
