@@ -8,12 +8,8 @@
   <%= favicon_link_tag 'dota2.jpg' %>
   <%= action_cable_meta_tag %>
   <script type="text/JavaScript">
-  function timedRefresh(timeoutPeriod) {
-       setTimeout("location.reload(true);",timeoutPeriod);
-  }
 </script>
 </head>
-<body onload="JavaScript:timedRefresh(30000);">
 <body>
 
 <%= render 'layouts/header' %>
