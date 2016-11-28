@@ -53,4 +53,4 @@ end
 gem 'sprockets', '3.6.3'
 gem 'distribution'
 gem 'rails_12factor'
-gem 'redis', '~> 3.0'
+gem 'redis', '~> 3.2'
