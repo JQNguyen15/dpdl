@@ -6,18 +6,18 @@ class ApplicationController < ActionController::Base
   before_action :record_user_activity
   # general purpose stuff
   private
-  	def current_user
-  		return nil unless session[:user_id]
-  		@current_user ||= User.find_by(id: session[:user_id])
-  	end
+    def current_user
+      return nil unless session[:user_id]
+      @current_user ||= User.find_by(id: session[:user_id])
+    end
 
-  	helper_method :current_user
+    helper_method :current_user
 
-  	def record_user_activity
-  		if current_user
-  			current_user.touch :last_active_at
-  		end
-  	end
+    def record_user_activity
+      if current_user
+        current_user.touch :last_active_at
+      end
+    end
 
     def logged_in
       @user = current_user

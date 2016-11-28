@@ -3,7 +3,7 @@ class Game < ActiveRecord::Base
   #TODO
   #refactor
   after_initialize :set_attr
- 
+
   def set_attr
     @defaultInitialMean = 25.0
     @beta = @defaultInitialMean / 6.0
@@ -26,7 +26,6 @@ class Game < ActiveRecord::Base
   end
 
   def make_teams
-
     teams = self.players.combination(5).to_a
     self.match_quality = 0.0
     self.save
@@ -85,7 +84,6 @@ class Game < ActiveRecord::Base
   end # end definition
 
   def calc_stakes
-
     # array of the rating of each player
     teamARatings = []
     teamBRatings = []
@@ -115,7 +113,7 @@ class Game < ActiveRecord::Base
     teamBSTD.map! { |num| num ** 2}
 
     teamASTDSum = teamASTD.inject(0, :+)
-    teamBSTDSum = teamBSTD.inject(0, :+)    
+    teamBSTDSum = teamBSTD.inject(0, :+)
 
     totalPlayers = 10
 
@@ -155,7 +153,6 @@ class Game < ActiveRecord::Base
   end
 
   def VExceedsMargin(teamPerformanceDiff, drawMargin, c)
-    
     teamPerformanceDiff /= c
     drawMargin /= c
     d = Distribution::Normal.cdf(teamPerformanceDiff - drawMargin)

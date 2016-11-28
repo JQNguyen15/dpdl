@@ -1,9 +1,8 @@
-
 this.App = {};
 
-App.cable = ActionCable.createConsumer("/cable");  
+App.cable = ActionCable.createConsumer("/cable");
 
-App.messages = App.cable.subscriptions.create('PlayerLeaveGamesChannel', {  
+App.messages = App.cable.subscriptions.create('PlayerLeaveGamesChannel', {
   received: function(data) {
   	var location = "#players-" + data.gameid;
    return $(location).empty().append(this.renderMessage(data));
