@@ -12,7 +12,7 @@ Feel free to contribute. Live demo is at https://dpdl.herokuapp.com.
 * Fix TrueSkill algorithm to match http://boson.research.microsoft.com/trueskill/rankcalculator.aspx
 
 #### Priority: Medium
-* Leaderboard - Show top ranked gamers on the DPDL leaderboard.
+* ~~Leaderboard - Show top ranked gamers on the DPDL leaderboard.~~
 * Forbid feature - Gamers on DPDL should be able to forbid other
 users from their games.
 * Admin features - Admins should be able to resolve issues such as
