@@ -1,31 +1,31 @@
 <div id="open-games" class="col-md-4">
-    <h1>Open Games</h1>
-    <% @games = open_games %>
-    <% if current_user && !current_user.in_game && !current_user.game_started %>
-        <%= link_to "Create Game", create_path, class: "btn btn-primary" %>
-    <% end %>
+  <h1>Open Games</h1>
+  <% @games = open_games %>
+  <% if current_user && !current_user.in_game && !current_user.game_started %>
+    <%= link_to "Create Game", create_path, class: "btn btn-primary" %>
+  <% end %>
 
-    <% if @games %>
-        <ul>
-            <% @games.each do |game| %>
-                <div id='<%= game.id %>'>
-                <%= render 'layouts/display_players', :game => game %>
-                <% if current_user %>
-                    <% if !current_user.in_game && game.players.count < 10 %>
-                        <%= render 'layouts/join_game', :game => game %>
-                    <% elsif current_user.in_game %>
-                        <% if game.players.include? current_user.id %>
-                            <%= link_to "Leave Game", cancel_path(:gameid => game.id), class: "btn btn-danger" %>
-                        <% end %>
-                    <% end %>
-
-                    <% if current_user.id == game.host && game.players.count == 10 %>
-                        <%= link_to "Start Game", start_path(:gameid => game.id), class: "btn btn-info" %> <br>
-                    <% end %>
-                    <br>
-                <% end %>
-                </div>
+  <% if @games %>
+    <ul>
+      <% @games.each do |game| %>
+        <div id='<%= game.id %>'>
+        <%= render 'layouts/display_players', :game => game %>
+        <% if current_user %>
+          <% if !current_user.in_game && game.players.count < 10 %>
+            <%= render 'layouts/join_game', :game => game %>
+          <% elsif current_user.in_game %>
+            <% if game.players.include? current_user.id %>
+              <%= link_to "Leave Game", cancel_path(:gameid => game.id), class: "btn btn-danger" %>
             <% end %>
-        </ul>
-    <% end %>
+          <% end %>
+
+          <% if current_user.id == game.host && game.players.count == 10 %>
+            <%= link_to "Start Game", start_path(:gameid => game.id), class: "btn btn-info" %> <br>
+          <% end %>
+          <br>
+        <% end %>
+        </div>
+      <% end %>
+    </ul>
+  <% end %>
 </div>
