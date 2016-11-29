@@ -13,4 +13,5 @@ Rails.application.routes.draw do
   get '/vote_radiant', to: 'games#vote_radiant'
   get '/vote_dire', to: 'games#vote_dire'
   get '/vote_draw', to: 'games#vote_draw'
+  get '/leaderboard', to: 'static_pages#leaderboard'
 end

@@ -1,0 +1,10 @@
+<center>
+  <h1>Leaderboard</h1>
+  <% @users.each_with_index do |user, index| %>
+    <% if user.avatar_url %>
+      <%= image_tag user.avatar_url %>
+    <% end %>
+    <p><%= index + 1 %>. <%= user.nickname %></p>
+    <p>Skill: <%= user.skill %></p>
+  <% end %>
+</center>
