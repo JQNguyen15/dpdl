@@ -24,6 +24,8 @@ compare with other players.
 team won and how much each player won.
 * Notification/Sounds for when game is full/starts.
 * Rework UI.
+* Captains Mode - Allow 2 players to challenge each other and pick
+teams based on a player pool.
 
 #### Priority: Low
 * Test Suite - Implement unit, integration and acceptance testing.
