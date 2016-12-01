@@ -81,6 +81,20 @@ class Game < ActiveRecord::Base
       end
 
     end # end for each team
+    #calculate avg mmr for teams
+    self.radint.each do |player|
+      aPlayer = User.find_by(id: player)
+      self.radiMmr += aPlayer.skill
+    end
+    self.radiMmr /= 5
+
+    self.dire.each do |player|
+      aPlayer = User.find_by(id: player)
+      self.direMmr += aPlayer.skill
+    end
+    self.direMmr /= 5
+
+    self.save
   end # end definition
 
   def calc_stakes
@@ -200,6 +214,7 @@ class Game < ActiveRecord::Base
       newSTD = Math.sqrt(( (player.doubt ** 2) + @tuaSquared ) * ( 1 - (@w * stdDevMultiplier)))
       player.doubt = newSTD
       player.skill = newMean
+      player.wins += 1
       player.save
     end
     self.save
@@ -223,6 +238,7 @@ class Game < ActiveRecord::Base
       newSTD = Math.sqrt(( (player.doubt ** 2) + @tuaSquared ) * ( 1 - (@w * stdDevMultiplier)))
       player.doubt = newSTD
       player.skill = newMean
+      player.losses += 1
       player.save
     end
     self.save

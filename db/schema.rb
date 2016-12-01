@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161126225705) do
+ActiveRecord::Schema.define(version: 20161201053014) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -31,6 +31,8 @@ ActiveRecord::Schema.define(version: 20161126225705) do
     t.string   "loser"
     t.boolean  "finished",      default: false
     t.integer  "draw_votes",    default: 0
+    t.decimal  "radiMmr",       default: "0.0"
+    t.decimal  "direMmr",       default: "0.0"
   end
 
   create_table "users", force: :cascade do |t|
@@ -46,6 +48,8 @@ ActiveRecord::Schema.define(version: 20161126225705) do
     t.boolean  "game_started",   default: false
     t.float    "skill",          default: 25.0
     t.float    "doubt",          default: 8.333333333333334
+    t.integer  "wins",           default: 0
+    t.integer  "losses",         default: 0
     t.index ["uid"], name: "index_users_on_uid", unique: true, using: :btree
   end
 

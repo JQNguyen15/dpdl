@@ -28,8 +28,8 @@ class GamesController < ApplicationController
     if @game && logged_in
       if @game.host == current_user.id
         @game.players.each do |player|
-            @aplayer = User.find_by(id: player)
-            user_leave(@aplayer)
+          @aplayer = User.find_by(id: player)
+          user_leave(@aplayer)
         end
         @game.destroy
         ActionCable.server.broadcast 'destroygame',
