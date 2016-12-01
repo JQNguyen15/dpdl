@@ -1,6 +1,6 @@
 <b>Game ID: </b>
 <%= game.id %> Match Quality: <%= game.match_quality %><br>
-<u>Radiant</u>
+<u>Radiant</u>: <%= game.radiMmr %>
 <ul>
   <% game.radint.each do |player| %>
     <li>
@@ -13,7 +13,7 @@
     </li>
   <% end %>
 </ul>
-<u>Dire</u>
+<u>Dire</u>: <%= game.direMmr %>
 <ul>
   <% game.dire.each do |player| %>
     <li>
