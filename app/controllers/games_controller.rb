@@ -128,7 +128,7 @@ class GamesController < ApplicationController
               @aplayer.save
             end #end player
             ActionCable.server.broadcast 'destroygame',
-              ameid: @game.id
+              gameid: @game.id
           end # end check votes
         end # end if game
       end # end current user has vote
