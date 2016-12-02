@@ -18,8 +18,8 @@ users from their games.
 * Admin features - Admins should be able to resolve issues such as
 resulting a game or aborting a game.
 * Refactor/cleanup code for future devs on DPDL.
-* Stat tracking - Users should be able to see win/loss statistics and
-compare with other players.
+* ~~Stat tracking - Users should be able to see win/loss statistics~~
+* Compare players - Users should be able to compare their stats with another player
 * Recent Games - Implement a recent games list with stats on which
 team won and how much each player won.
 * Notification/Sounds for when game is full/starts.
@@ -32,7 +32,7 @@ teams based on a player pool.
 * Test Suite - Implement unit, integration and acceptance testing.
 * Chatroom - Gamers on DPDL should have a readily and easy to use
 chatroom.
-* Individual PMs - ALlow people to privately message each other
+* Individual PMs - Allow people to privately message each other
 
 ## Requirements
 
