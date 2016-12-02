@@ -30,6 +30,8 @@ class GamesController < ApplicationController
         @game.players.each do |player|
           @aplayer = User.find_by(id: player)
           user_leave(@aplayer)
+          @aplayer.in_game = false
+          @aplayer.save
         end
         @game.destroy
         ActionCable.server.broadcast 'destroygame',
@@ -125,6 +127,7 @@ class GamesController < ApplicationController
               @aplayer = User.find_by(id: player)
               @aplayer.has_vote = false
               user_leave(@aplayer)
+              @aplayer.in_game = false
               @aplayer.save
             end #end player
             ActionCable.server.broadcast 'destroygame',
@@ -162,6 +165,7 @@ class GamesController < ApplicationController
               @aplayer = User.find_by(id: player)
               @aplayer.has_vote = false
               user_leave(@aplayer)
+              @aplayer.in_game = false
               @aplayer.save
             end #end player
             ActionCable.server.broadcast 'destroygame',
@@ -192,6 +196,7 @@ class GamesController < ApplicationController
               @aplayer = User.find_by(id: player)
               @aplayer.has_vote = false
               user_leave(@aplayer)
+              @aplayer.in_game = false
               @aplayer.save
             end #end player
             ActionCable.server.broadcast 'destroygame',
