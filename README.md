@@ -26,7 +26,7 @@ team won and how much each player won.
 * Rework UI.
 * Captains Mode - Allow 2 players to challenge each other and pick
 teams based on a player pool.
-* Rework rails action cable to use 1 connection per user.
+* ~~Rework rails action cable to use 1 connection per user.~~
 
 #### Priority: Low
 * Test Suite - Implement unit, integration and acceptance testing.
