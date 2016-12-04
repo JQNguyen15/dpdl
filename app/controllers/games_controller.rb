@@ -14,6 +14,7 @@ class GamesController < ApplicationController
       @game.save
       @host = User.find_by(id: current_user.id)
       ActionCable.server.broadcast 'games',
+        action: 'create',
         gameid: @game.id,
         host: @host.nickname,
         hostmmr: @host.skill,
@@ -34,8 +35,9 @@ class GamesController < ApplicationController
           @aplayer.save
         end
         @game.destroy
-        ActionCable.server.broadcast 'destroygame',
-        gameid: @game.id
+        ActionCable.server.broadcast 'games',
+          action: 'destroy',
+          gameid: @game.id
       else
         @game.players.delete current_user.id
         @game.save
@@ -49,7 +51,8 @@ class GamesController < ApplicationController
           @playersnicks << @aplayer.nickname
         end
         down = false
-        ActionCable.server.broadcast 'playerleavegames',
+        ActionCable.server.broadcast 'games',
+          action: 'leave',
           gameid: @game.id,
           gameplayers: @playersnicks,
           gameskill: @playersmmrs
@@ -69,11 +72,11 @@ class GamesController < ApplicationController
       if @game && @game.players.count < 10
         user_join
         add_player_to_game(@game, current_user)
-        ActionCable.server.broadcast 'playergames',
+        ActionCable.server.broadcast 'games',
+          action: 'join',
           playername: current_user.nickname,
           playerskill: current_user.skill,
           gameid: @game.id
-
         up = true
         update_num_players(@game.players.count,@game.id,up)
       end
@@ -94,7 +97,8 @@ class GamesController < ApplicationController
           @aplayer.save
         end
         @game.save
-        ActionCable.server.broadcast 'destroygame',
+        ActionCable.server.broadcast 'games',
+          action: 'destroy',
           gameid: @game.id
       end
     end
@@ -131,6 +135,7 @@ class GamesController < ApplicationController
               @aplayer.save
             end #end player
             ActionCable.server.broadcast 'destroygame',
+              action: 'destroy',
               gameid: @game.id
           end # end check votes
         end # end if game
@@ -168,7 +173,8 @@ class GamesController < ApplicationController
               @aplayer.in_game = false
               @aplayer.save
             end #end player
-            ActionCable.server.broadcast 'destroygame',
+            ActionCable.server.broadcast 'games',
+              action: 'destroy',
               gameid: @game.id
           end # end check votes
         end # end if game
@@ -199,7 +205,8 @@ class GamesController < ApplicationController
               @aplayer.in_game = false
               @aplayer.save
             end #end player
-            ActionCable.server.broadcast 'destroygame',
+            ActionCable.server.broadcast 'games',
+              action: 'destroy',
               gameid: @game.id
           end
         end
@@ -227,7 +234,8 @@ class GamesController < ApplicationController
     end
 
     def update_num_players(numPlayers,gameID,upOrDown)
-      ActionCable.server.broadcast 'numplayergames',
+      ActionCable.server.broadcast 'games',
+        action: 'updateNumberOfPlayers',
         numPlayers: numPlayers,
         gameid: gameID,
         upOrDown: upOrDown
