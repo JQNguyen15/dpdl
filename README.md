@@ -36,7 +36,8 @@ chatroom.
 
 ## Requirements
 
-In order to contribute to DPDL, you will need the following software:
+Currently, development on DPDL is supported on OSX. In order to
+contribute to DPDL, you will need the following software:
 
 * Rails 5.0+
 * Ruby 2.3.0+
