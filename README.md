@@ -17,7 +17,7 @@ Feel free to contribute. Live demo is at https://dpdl.herokuapp.com.
 users from their games.
 * Admin features - Admins should be able to resolve issues such as
 resulting a game or aborting a game.
-* Refactor/cleanup code for future devs on DPDL.
+* ~~Refactor/cleanup code for future devs on DPDL.~~
 * ~~Stat tracking - Users should be able to see win/loss statistics~~
 * Compare players - Users should be able to compare their stats with another player
 * Recent Games - Implement a recent games list with stats on which
