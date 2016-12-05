@@ -50,6 +50,11 @@ To run this app on your local machine, clone the repo then run
 bundle install
 ```
 
+To create the database
+```
+rails db:create
+```
+
 Next, migrate the database
 ```
 rails db:migrate
