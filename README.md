@@ -7,11 +7,8 @@ Feel free to contribute. Live demo is at https://dpdl.herokuapp.com.
 
 ## TODO
 
-#### Priority: High
-
-* Fix TrueSkill algorithm to match http://boson.research.microsoft.com/trueskill/rankcalculator.aspx
-
-#### Priority: Medium
+* Fix TrueSkill algorithm. Currently has some rounding issues.
+See http://boson.research.microsoft.com/trueskill/rankcalculator.aspx
 * ~~Leaderboard - Show top ranked gamers on the DPDL leaderboard.~~
 * Forbid feature - Gamers on DPDL should be able to forbid other
 users from their games.
@@ -27,8 +24,6 @@ team won and how much each player won.
 * Captains Mode - Allow 2 players to challenge each other and pick
 teams based on a player pool.
 * ~~Rework rails action cable to use 1 connection per user.~~
-
-#### Priority: Low
 * Test Suite - Implement unit, integration and acceptance testing.
 * Chatroom - Gamers on DPDL should have a readily and easy to use
 chatroom.
