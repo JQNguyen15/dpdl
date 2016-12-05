@@ -7,17 +7,14 @@ Feel free to contribute. Live demo is at https://dpdl.herokuapp.com.
 
 ## TODO
 
-#### Priority: High
-
-* Fix TrueSkill algorithm to match http://boson.research.microsoft.com/trueskill/rankcalculator.aspx
-
-#### Priority: Medium
+* Fix TrueSkill algorithm. Currently some rounding issues.
+See http://boson.research.microsoft.com/trueskill/rankcalculator.aspx
 * ~~Leaderboard - Show top ranked gamers on the DPDL leaderboard.~~
 * Forbid feature - Gamers on DPDL should be able to forbid other
 users from their games.
 * Admin features - Admins should be able to resolve issues such as
 resulting a game or aborting a game.
-* Refactor/cleanup code for future devs on DPDL.
+* ~~Refactor/cleanup code for future devs on DPDL.~~
 * ~~Stat tracking - Users should be able to see win/loss statistics~~
 * Compare players - Users should be able to compare their stats with another player
 * Recent Games - Implement a recent games list with stats on which
@@ -27,8 +24,6 @@ team won and how much each player won.
 * Captains Mode - Allow 2 players to challenge each other and pick
 teams based on a player pool.
 * ~~Rework rails action cable to use 1 connection per user.~~
-
-#### Priority: Low
 * Test Suite - Implement unit, integration and acceptance testing.
 * Chatroom - Gamers on DPDL should have a readily and easy to use
 chatroom.
@@ -41,6 +36,7 @@ contribute to DPDL, you will need the following software:
 
 * Rails 5.0+
 * Ruby 2.3.0+
+* Postgres
 
 ## Getting Started
 
