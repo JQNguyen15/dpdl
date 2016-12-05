@@ -15,10 +15,8 @@ class GamesController < ApplicationController
       @host = User.find_by(id: current_user.id)
       ActionCable.server.broadcast 'games',
         action: 'create',
-        gameid: @game.id,
-        host: @host.nickname,
-        hostmmr: @host.skill,
-        numPlayers: @game.players.count
+        game: @game,
+        host: @host
     end
     redirect_to root_url
   end
@@ -28,12 +26,7 @@ class GamesController < ApplicationController
     @game = Game.find_by(id: params[:gameid])
     if @game && logged_in
       if @game.host == current_user.id
-        @game.players.each do |player|
-          @aplayer = User.find_by(id: player)
-          user_leave(@aplayer)
-          @aplayer.in_game = false
-          @aplayer.save
-        end
+        remove_all_players_from_game(@game)
         @game.destroy
         ActionCable.server.broadcast 'games',
           action: 'destroy',
@@ -50,13 +43,12 @@ class GamesController < ApplicationController
           @playersmmrs << @aplayer.skill
           @playersnicks << @aplayer.nickname
         end
-        down = false
         ActionCable.server.broadcast 'games',
           action: 'leave',
           gameid: @game.id,
           gameplayers: @playersnicks,
           gameskill: @playersmmrs
-          update_num_players(@game.players.count, @game.id, down)
+          update_num_players(@game)
       end
       redirect_to root_url
     end
@@ -77,8 +69,7 @@ class GamesController < ApplicationController
           playername: current_user.nickname,
           playerskill: current_user.skill,
           gameid: @game.id
-        up = true
-        update_num_players(@game.players.count,@game.id,up)
+        update_num_players(@game)
       end
     end
     redirect_to root_url
@@ -98,73 +89,58 @@ class GamesController < ApplicationController
         end
         @game.save
         ActionCable.server.broadcast 'games',
-          action: 'destroy',
-          gameid: @game.id
+          action: 'destroy'
       end
     end
     redirect_to root_url
   end
 
-  def vote_radiant
+  def vote
     if logged_in
       if current_user.has_vote == true
         current_user.has_vote = false
         current_user.save
-
         @game = Game.find_by(id: params[:gameid])
         if @game
-          @game.rad_votes += 1
-          @game.save
+          case params[:team]
+            when "radiant"
+              @game.rad_votes += 1
+              @game.save
+            when "dire"
+              @game.dire_votes += 1
+              @game.save
+            when "draw"
+              @game.draw_votes += 1
+              @game.save
+          end
 
           if @game.rad_votes >= 6 && @game.finished == false && @game.started == true
             @game.winner = "radiant"
             @game.loser = "dire"
-
-            @game.calc_stakes
-            @game.get_stakes_for_outcome
-            @game.calc_winner_ratings
-            @game.calc_loser_ratings
             @game.finished = true
             @game.started = false
             @game.save
-            @game.players.each do |player|
-              @aplayer = User.find_by(id: player)
-              @aplayer.has_vote = false
-              user_leave(@aplayer)
-              @aplayer.in_game = false
-              @aplayer.save
-            end #end player
-            ActionCable.server.broadcast 'destroygame',
-              action: 'destroy',
-              gameid: @game.id
-          end # end check votes
-        end # end if game
-      end # end current user has vote
-    end # end logged in
-    redirect_to root_url
-  end # end def
-
-  def vote_dire
-    if logged_in
-      if current_user.has_vote == true
-        current_user.has_vote = false
-        current_user.save
-
-        @game = Game.find_by(id: params[:gameid])
-        if @game
-          @game.dire_votes += 1
-          @game.save
-
-          if @game.dire_votes >= 6 && @game.finished == false && @game.started == true
+          elsif @game.dire_votes >= 6 && @game.finished == false && @game.started == true
             @game.winner = "dire"
             @game.loser = "radiant"
+            @game.finished = true
+            @game.started = false
+            @game.save
+          elsif @game.draw_votes >= 6 && @game.finished == false && @game.started == true
+            @game.finished = true
+            @game.started = false
+            @game.save
+            remove_all_players_from_game(@game)
+            ActionCable.server.broadcast 'games',
+              action: 'destroy'
+            return
+          end
 
+          if @game.finished == true && @game.started == false
             @game.calc_stakes
             @game.get_stakes_for_outcome
             @game.calc_winner_ratings
             @game.calc_loser_ratings
-            @game.finished = true
-            @game.started = false
             @game.save
             @game.players.each do |player|
               @aplayer = User.find_by(id: player)
@@ -174,8 +150,7 @@ class GamesController < ApplicationController
               @aplayer.save
             end #end player
             ActionCable.server.broadcast 'games',
-              action: 'destroy',
-              gameid: @game.id
+              action: 'destroy'
           end # end check votes
         end # end if game
       end # end current user has vote
@@ -183,39 +158,17 @@ class GamesController < ApplicationController
     redirect_to root_url
   end # end def
 
-  def vote_draw
-    if logged_in
-      if current_user.has_vote == true
-        current_user.has_vote = false
-        current_user.save
-
-        @game = Game.find_by(id: params[:gameid])
-        if @game
-          @game.draw_votes += 1
-          @game.save
-          if @game.draw_votes >= 6 && @game.finished == false && @game.started == true
-            @game.finished = true
-            @game.started = false
-            @game.save
-
-            @game.players.each do |player|
-              @aplayer = User.find_by(id: player)
-              @aplayer.has_vote = false
-              user_leave(@aplayer)
-              @aplayer.in_game = false
-              @aplayer.save
-            end #end player
-            ActionCable.server.broadcast 'games',
-              action: 'destroy',
-              gameid: @game.id
-          end
-        end
-      end
-    end
-  redirect_to root_url
-  end
-
   private
+
+    def remove_all_players_from_game(game)
+      @game.players.each do |player|
+        @aplayer = User.find_by(id: player)
+        @aplayer.has_vote = false
+        @aplayer.in_game = false
+        @aplayer.save
+      end #end player
+    end
+
     # user is joining a game
     def user_join
       current_user.in_game = true
@@ -233,12 +186,10 @@ class GamesController < ApplicationController
       aGame.save
     end
 
-    def update_num_players(numPlayers,gameID,upOrDown)
+    def update_num_players(game)
       ActionCable.server.broadcast 'games',
         action: 'updateNumberOfPlayers',
-        numPlayers: numPlayers,
-        gameid: gameID,
-        upOrDown: upOrDown
+        game: game
     end
 
 end
