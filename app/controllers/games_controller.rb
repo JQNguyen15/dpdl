@@ -120,12 +120,14 @@ class GamesController < ApplicationController
             @game.finished = true
             @game.started = false
             @game.save
+            remove_all_players_from_game(@game)
           elsif @game.dire_votes >= 6 && @game.finished == false && @game.started == true
             @game.winner = "dire"
             @game.loser = "radiant"
             @game.finished = true
             @game.started = false
             @game.save
+            remove_all_players_from_game(@game)
           elsif @game.draw_votes >= 6 && @game.finished == false && @game.started == true
             @game.finished = true
             @game.started = false
@@ -142,13 +144,6 @@ class GamesController < ApplicationController
             @game.calc_winner_ratings
             @game.calc_loser_ratings
             @game.save
-            @game.players.each do |player|
-              @aplayer = User.find_by(id: player)
-              @aplayer.has_vote = false
-              user_leave(@aplayer)
-              @aplayer.in_game = false
-              @aplayer.save
-            end #end player
             ActionCable.server.broadcast 'games',
               action: 'destroy'
           end # end check votes
@@ -162,7 +157,7 @@ class GamesController < ApplicationController
 
     def remove_all_players_from_game(game)
       @game.players.each do |player|
-        @aplayer = User.find_by(id: player)
+        @aplayer = User.lock.find(player)
         @aplayer.has_vote = false
         @aplayer.in_game = false
         @aplayer.save
