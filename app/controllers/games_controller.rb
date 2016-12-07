@@ -38,11 +38,11 @@ class GamesController < ApplicationController
         # need 2 arrays here 1 for player nicknames, 1 for mmr
         @playersmmrs = []
         @playersnicks = []
-        @game.players.each do |player|
+        @game.players.each { |player|
           @aplayer = User.find_by(id: player)
           @playersmmrs << @aplayer.skill
           @playersnicks << @aplayer.nickname
-        end
+        }
         ActionCable.server.broadcast 'games',
           action: 'leave',
           gameid: @game.id,
@@ -82,11 +82,11 @@ class GamesController < ApplicationController
         @game.make_teams
         @game.started = true
         # give all players a vote
-        @game.players.each do |player|
+        @game.players.each { |player|
           @aplayer = User.find_by(id: player)
           @aplayer.has_vote = true
           @aplayer.save
-        end
+        }
         @game.save
         ActionCable.server.broadcast 'games',
           action: 'destroy'
@@ -156,12 +156,12 @@ class GamesController < ApplicationController
   private
 
     def remove_all_players_from_game(game)
-      @game.players.each do |player|
+      @game.players.each { |player|
         @aplayer = User.lock.find(player)
         @aplayer.has_vote = false
         @aplayer.in_game = false
         @aplayer.save
-      end #end player
+      }
     end
 
     # user is joining a game
