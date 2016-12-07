@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161201053014) do
+ActiveRecord::Schema.define(version: 20161206233333) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -33,6 +33,13 @@ ActiveRecord::Schema.define(version: 20161201053014) do
     t.integer  "draw_votes",    default: 0
     t.decimal  "radiMmr",       default: "0.0"
     t.decimal  "direMmr",       default: "0.0"
+    t.float    "w",             default: 0.0
+    t.float    "v",             default: 0.0
+    t.float    "c",             default: 0.0
+    t.float    "teamASTDSum",   default: 0.0
+    t.float    "teamBSTDSum",   default: 0.0
+    t.float    "teamAMeanSum",  default: 0.0
+    t.float    "teamBMeanSum",  default: 0.0
   end
 
   create_table "users", force: :cascade do |t|

@@ -1,7 +1,5 @@
 class Game < ActiveRecord::Base
   validate :check_max_players
-  #TODO
-  #refactor
   after_initialize :set_attr
 
   def set_attr
@@ -12,17 +10,32 @@ class Game < ActiveRecord::Base
     @initialStandardDeviation = @defaultInitialMean / 3.0
     @betaSquared = @beta * @beta
     @drawMargin = 0.0
-    @c = 0.0
     @epsilon = 1e-20
     @tuaSquared = @dynamicsFactor * @dynamicsFactor
-    @w = 0.0
-    @v = 0.0
   end
 
   def check_max_players
     if self.players.count > 10
       errors.add(:players, "max players of 10")
     end
+  end
+
+  def get_ratings(team)
+    teamRatings = []
+    team.each do |player|
+      aPlayer = User.find(player)
+      teamRatings << aPlayer.skill
+    end
+    return teamRatings
+  end
+
+  def get_std(team)
+    teamStd = []
+    team.each do |player|
+      aPlayer = User.find(player)
+      teamStd << aPlayer.doubt
+    end
+    return teamStd
   end
 
   def make_teams
@@ -34,24 +47,12 @@ class Game < ActiveRecord::Base
       teamB = self.players - teamA
 
       # array of the rating of each player
-      teamARatings = []
-      teamBRatings = []
+      teamARatings = get_ratings(teamA)
+      teamBRatings = get_ratings(teamB)
 
       # std deviations of each player
-      teamASTD = []
-      teamBSTD = []
-
-      teamA.each do |player|
-        aPlayer = User.find_by(id: player)
-        teamARatings << aPlayer.skill
-        teamASTD << aPlayer.doubt
-      end
-
-      teamB.each do |player|
-        aPlayer = User.find_by(id: player)
-        teamBRatings << aPlayer.skill
-        teamBSTD << aPlayer.doubt
-      end
+      teamASTD = get_std(teamA)
+      teamBSTD = get_std(teamB)
 
       # sums up the values of the ratings
       teamAMeanSum = teamARatings.inject(0, :+)
@@ -77,61 +78,20 @@ class Game < ActiveRecord::Base
         self.match_quality = matchQuality
         self.radint = teamA
         self.dire = teamB
-        self.save
+        self.teamASTDSum = teamASTDSum
+        self.teamBSTDSum = teamBSTDSum
+        self.teamAMeanSum = teamAMeanSum
+        self.teamBMeanSum = teamBMeanSum
+        self.radiMmr = self.teamAMeanSum / 5.0
+        self.direMmr = self.teamBMeanSum / 5.0
       end
-
     end # end for each team
-    #calculate avg mmr for teams
-    self.radint.each do |player|
-      aPlayer = User.find_by(id: player)
-      self.radiMmr += aPlayer.skill
-    end
-    self.radiMmr /= 5
-
-    self.dire.each do |player|
-      aPlayer = User.find_by(id: player)
-      self.direMmr += aPlayer.skill
-    end
-    self.direMmr /= 5
-
     self.save
   end # end definition
 
   def calc_stakes
-    # array of the rating of each player
-    teamARatings = []
-    teamBRatings = []
-
-    # std deviations of each player
-    teamASTD = []
-    teamBSTD = []
-
-    self.radint.each do |player|
-      aPlayer = User.find_by(id: player)
-      teamARatings << aPlayer.skill
-      teamASTD << aPlayer.doubt
-    end
-
-    self.dire.each do |player|
-      aPlayer = User.find_by(id: player)
-      teamBRatings << aPlayer.skill
-      teamBSTD << aPlayer.doubt
-    end
-
-    # sums up the values of the ratings
-    teamAMeanSum = teamARatings.inject(0, :+)
-    teamBMeanSum = teamBRatings.inject(0, :+)
-
-    # square then add up std devs
-    teamASTD.map! { |num| num ** 2}
-    teamBSTD.map! { |num| num ** 2}
-
-    teamASTDSum = teamASTD.inject(0, :+)
-    teamBSTDSum = teamBSTD.inject(0, :+)
-
     totalPlayers = 10
-
-    @c = Math.sqrt( teamASTDSum + teamBSTDSum + (totalPlayers * @betaSquared))
+    self.c = Math.sqrt(self.teamASTDSum + self.teamBSTDSum + (totalPlayers * @betaSquared))
     self.save
   end
 
@@ -139,30 +99,18 @@ class Game < ActiveRecord::Base
     winnerRatings = []
     loserRatings = []
     if self.winner == "radiant"
-      self.radint.each do |player|
-        aPlayer = User.find_by(id: player)
-        winnerRatings << aPlayer.skill
-      end
-      self.dire.each do |player|
-        aPlayer = User.find_by(id: player)
-        loserRatings << aPlayer.skill
-      end
+      winnerRatings = get_ratings(self.radint)
+      loserRatings = get_ratings(self.dire)
     else
-      self.radint.each do |player|
-        aPlayer = User.find_by(id: player)
-        loserRatings << aPlayer.skill
-      end
-      self.dire.each do |player|
-        aPlayer = User.find_by(id: player)
-        winnerRatings << aPlayer.skill
-      end
+      loserRatings = get_ratings(self.radint)
+      winnerRatings = get_ratings(self.dire)
     end
     winnerMeanSum = winnerRatings.inject(0, :+)
     loserMeanSum = loserRatings.inject(0, :+)
 
     meanDelta = winnerMeanSum - loserMeanSum
-    @v = VExceedsMargin(meanDelta, @drawMargin, @c)
-    @w = WExceedsMargin(meanDelta, @drawMargin, @c)
+    self.v = VExceedsMargin(meanDelta, @drawMargin, self.c)
+    self.w = WExceedsMargin(meanDelta, @drawMargin, self.c)
     self.save
   end
 
@@ -196,6 +144,25 @@ class Game < ActiveRecord::Base
     return result
   end
 
+  def calc_new_ratings(team, rankMultiplier)
+    team.each do |player|
+      aPlayer = User.find(player)
+      oldSkill = aPlayer.skill
+      oldStd = aPlayer.doubt
+      meanMultiplier = ((oldStd ** 2) + @tuaSquared) / self.c
+      stdDevMultiplier = ((oldStd ** 2) + @tuaSquared) / (self.c ** 2)
+      playerMeanDelta = meanMultiplier * self.v * rankMultiplier
+      newMean = oldSkill + playerMeanDelta
+      newStd = Math.sqrt(
+        ((oldStd ** 2) + @tuaSquared) * (1 - (self.w * stdDevMultiplier))
+      )
+      aPlayer.doubt = newStd
+      aPlayer.skill = newMean
+      aPlayer.wins += 1
+      aPlayer.save
+    end
+  end
+
   def calc_winner_ratings
     rankMultiplier = 1
     if self.winner == "radiant"
@@ -203,20 +170,7 @@ class Game < ActiveRecord::Base
     else
       teamWinner = self.dire
     end
-
-    teamWinner.each do |players|
-      player = User.find_by(id: players)
-      meanMultiplier = ((player.doubt ** 2) + @tuaSquared) / @c
-      stdDevMultiplier = ((player.doubt ** 2) + @tuaSquared) / (@c ** 2)
-      playerMeanDelta = meanMultiplier * @v * rankMultiplier
-      newMean = player.skill + playerMeanDelta
-
-      newSTD = Math.sqrt(( (player.doubt ** 2) + @tuaSquared ) * ( 1 - (@w * stdDevMultiplier)))
-      player.doubt = newSTD
-      player.skill = newMean
-      player.wins += 1
-      player.save
-    end
+    calc_new_ratings(teamWinner, rankMultiplier)
     self.save
   end
 
@@ -227,20 +181,7 @@ class Game < ActiveRecord::Base
     else
       teamLoser = self.dire
     end
-
-    teamLoser.each do |players|
-      player = User.find_by(id: players)
-      meanMultiplier = ((player.doubt ** 2) + @tuaSquared) / @c
-      stdDevMultiplier = ((player.doubt ** 2) + @tuaSquared) / (@c ** 2)
-      playerMeanDelta = meanMultiplier * @v * rankMultiplier
-      newMean = player.skill + playerMeanDelta
-
-      newSTD = Math.sqrt(( (player.doubt ** 2) + @tuaSquared ) * ( 1 - (@w * stdDevMultiplier)))
-      player.doubt = newSTD
-      player.skill = newMean
-      player.losses += 1
-      player.save
-    end
+    calc_new_ratings(teamLoser, rankMultiplier)
     self.save
   end
 
