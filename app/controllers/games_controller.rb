@@ -113,7 +113,7 @@ class GamesController < ApplicationController
               @game.draw_votes += 1
               @game.save
           end
-
+          # TODO: Refactor
           if @game.rad_votes >= 6 && @game.finished == false && @game.started == true
             @game.winner = "radiant"
             @game.loser = "dire"

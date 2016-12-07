@@ -12,13 +12,6 @@ class Game < ActiveRecord::Base
     @drawMargin = 0.0
     @epsilon = 1e-20
     @tuaSquared = @dynamicsFactor * @dynamicsFactor
-    @w = 0.0
-    @v = 0.0
-    @c = 0.0
-    @teamASTDSum = 0.0
-    @teamBSTDSum = 0.0
-    @teamAMeanSum = 0.0
-    @teamBMeanSum = 0.0
   end
 
   def check_max_players
@@ -85,23 +78,21 @@ class Game < ActiveRecord::Base
         self.match_quality = matchQuality
         self.radint = teamA
         self.dire = teamB
-        self.save
-        @teamASTDSum = teamASTDSum
-        @teamBSTDSum = teamBSTDSum
-        @teamAMeanSum = teamAMeanSum
-        @teamBMeanSum = teamBMeanSum
+        self.teamASTDSum = teamASTDSum
+        self.teamBSTDSum = teamBSTDSum
+        self.teamAMeanSum = teamAMeanSum
+        self.teamBMeanSum = teamBMeanSum
+        self.radiMmr = self.teamAMeanSum / 5.0
+        self.direMmr = self.teamBMeanSum / 5.0
       end
-
     end # end for each team
-    #calculate avg mmr for teams
-    self.radiMmr = @teamAMeanSum / 5.0
-    self.direMmr = @teamBMeanSum / 5.0
     self.save
   end # end definition
 
   def calc_stakes
     totalPlayers = 10
-    @c = Math.sqrt(@teamASTDSum + @teamBSTDSum + (totalPlayers * @betaSquared))
+    self.c = Math.sqrt(self.teamASTDSum + self.teamBSTDSum + (totalPlayers * @betaSquared))
+    self.save
   end
 
   def get_stakes_for_outcome
@@ -118,8 +109,9 @@ class Game < ActiveRecord::Base
     loserMeanSum = loserRatings.inject(0, :+)
 
     meanDelta = winnerMeanSum - loserMeanSum
-    @v = VExceedsMargin(meanDelta, @drawMargin, @c)
-    @w = WExceedsMargin(meanDelta, @drawMargin, @c)
+    self.v = VExceedsMargin(meanDelta, @drawMargin, self.c)
+    self.w = WExceedsMargin(meanDelta, @drawMargin, self.c)
+    self.save
   end
 
   def VExceedsMargin(teamPerformanceDiff, drawMargin, c)
@@ -157,12 +149,12 @@ class Game < ActiveRecord::Base
       aPlayer = User.find(player)
       oldSkill = aPlayer.skill
       oldStd = aPlayer.doubt
-      meanMultiplier = ((oldStd ** 2) + @tuaSquared) / @c
-      stdDevMultiplier = ((oldStd ** 2) + @tuaSquared) / (@c ** 2)
-      playerMeanDelta = meanMultiplier * @v * rankMultiplier
+      meanMultiplier = ((oldStd ** 2) + @tuaSquared) / self.c
+      stdDevMultiplier = ((oldStd ** 2) + @tuaSquared) / (self.c ** 2)
+      playerMeanDelta = meanMultiplier * self.v * rankMultiplier
       newMean = oldSkill + playerMeanDelta
       newStd = Math.sqrt(
-        ((oldStd ** 2) + @tuaSquared) * (1 - (@w * stdDevMultiplier))
+        ((oldStd ** 2) + @tuaSquared) * (1 - (self.w * stdDevMultiplier))
       )
       aPlayer.doubt = newStd
       aPlayer.skill = newMean
