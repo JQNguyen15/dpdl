@@ -7,8 +7,6 @@ Feel free to contribute. Live demo is at https://dpdl.herokuapp.com.
 
 ## TODO
 
-* Fix TrueSkill algorithm. Currently some rounding issues.
-See http://boson.research.microsoft.com/trueskill/rankcalculator.aspx
 * ~~Leaderboard - Show top ranked gamers on the DPDL leaderboard.~~
 * Forbid feature - Gamers on DPDL should be able to forbid other
 users from their games.
@@ -16,18 +14,14 @@ users from their games.
 resulting a game or aborting a game.
 * ~~Refactor/cleanup code for future devs on DPDL.~~
 * ~~Stat tracking - Users should be able to see win/loss statistics~~
-* Compare players - Users should be able to compare their stats with another player
-* Recent Games - Implement a recent games list with stats on which
-team won and how much each player won.
+* ~~Recent Games - Implement a recent games list~~
+* Show players how much they won or loss after each match.
 * Notification/Sounds for when game is full/starts.
 * Rework UI.
 * Captains Mode - Allow 2 players to challenge each other and pick
 teams based on a player pool.
 * ~~Rework rails action cable to use 1 connection per user.~~
 * Test Suite - Implement unit, integration and acceptance testing.
-* Chatroom - Gamers on DPDL should have a readily and easy to use
-chatroom.
-* Individual PMs - Allow people to privately message each other
 
 ## Requirements
 
@@ -77,34 +71,3 @@ the dpdl.herokuapp.com is replaced with your app name.
 
 DPDL tries to follow the https://github.com/styleguide/ruby when
 possible.
-
-## Workflow
-
-DPDL uses the
-[GitHub Flow](https://guides.github.com/introduction/flow/). The
-`master` branch must always be in a production-ready state. If you
-want to work on a feature or a fix, just branch off the latest master,
-commit your work on that branch, and make a pull request. Your work
-will be reviewed and discussed in that pull request. Once all
-automated checks have cleared, and the pull request has been
-peer-reviewed, it is merged back into master.
-
-### Branch Names
-
-Branch names should be descriptive of the feature or fix that they
-contain.
-
-### Commit Messages
-
-Commit messages should be short but descriptive. Use the first line as
-a summary, and the body of the commit for more detailed
-explanations. Try to keep the first line below 50 characters, and wrap
-the body at 72 characters wide.
-
-Use the present tense in the first line of the commit. For instance,
-favour "Add frobnicator" over "Added frobnicator".
-
-For more details on our commit message guidelines and the rationale,
-refer to
-[How to Write a Git Commit Message](http://chris.beams.io/posts/git-commit/)
-by Chris Beams.
