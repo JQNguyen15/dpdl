@@ -1,0 +1,45 @@
+<center>
+  <h1>Recent Games</h1>
+  <% @games.each do |game| %>
+    <div class="row">
+      <h2>Game: <%= game.id %></h2>
+      <h3>Winner: <%= game.winner %></h3>
+      <div class="col-md-6">
+        <table>
+          <% @radiant = game.radint %>
+          <tr>
+            <th><h4><u>Radiant</u></h4></th>
+          </tr>
+          <% @radiant.each do |player| %>
+          <tr>
+            <% @aPlayer = User.find(player) %>
+            <% if @aPlayer.avatar_url %>
+              <th><%= image_tag @aPlayer.avatar_url %></th>
+            <% end %>
+            <th><p><%= @aPlayer.nickname %></p></th>
+            <th><p>&nbsp;&nbsp;&nbsp;&nbsp;<%= @aPlayer.skill %></p></th>
+          </tr>
+          <% end %>
+        </table>
+      </div>
+      <div class="col-md-6">
+         <table>
+          <% @dire = game.dire %>
+          <tr>
+            <th><h4><u>Dire</u></h4></th>
+          </tr>
+          <% @dire.each do |player| %>
+          <tr>
+            <% @aPlayer = User.find(player) %>
+            <% if @aPlayer.avatar_url %>
+              <th><%= image_tag @aPlayer.avatar_url %></th>
+            <% end %>
+            <th><p><%= @aPlayer.nickname %></p></th>
+            <th><p>&nbsp;&nbsp;&nbsp;&nbsp;<%= @aPlayer.skill %></p></th>
+          </tr>
+          <% end %>
+        </table>
+      </div>
+    </div>
+  <% end %>
+</center>
