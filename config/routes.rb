@@ -14,5 +14,5 @@ Rails.application.routes.draw do
   get '/vote_dire', to: 'games#vote'
   get '/vote_draw', to: 'games#vote'
   get '/leaderboard', to: 'static_pages#leaderboard'
-  get '/recent_games', to: 'static_pages#recent_games'
+  get '/recent-games', to: 'static_pages#recent_games'
 end
