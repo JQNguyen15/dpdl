@@ -56,10 +56,7 @@ class GamesController < ApplicationController
 
   # a user wants to join
   def join_game
-    if logged_in && current_user.in_game
-      flash[:danger] = "Please leave your current game first"
-    end
-    if !current_user.in_game && logged_in
+    if logged_in
       @game = Game.find_by(id: params[:gameid])
       if @game && @game.players.count < 10
         user_join
